@@ -1,0 +1,22 @@
+{
+  "enabled": true,
+  "autoReview": true,
+  "qualityGates": {
+    "testCoverage": 80,
+    "lintErrors": 0,
+    "typeErrors": 0,
+    "securityVulnerabilities": 0
+  },
+  "checks": {
+    "lint": true,
+    "typeCheck": true,
+    "unitTests": true,
+    "integrationTests": true,
+    "securityScan": true
+  },
+  "reviewCriteria": {
+    "codeComplexity": 10,
+    "functionLength": 50,
+    "fileLength": 300
+  }
+}

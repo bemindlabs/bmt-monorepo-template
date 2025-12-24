@@ -52,7 +52,9 @@
     "docker:down": "docker-compose -f infra/docker/docker-compose.yml down",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release": "turbo build --filter='./packages/*' && changeset publish"
+    "release": "turbo build --filter='./packages/*' && changeset publish",
+    "zero-qa": "pnpm lint && pnpm type-check && pnpm test",
+    "zero-qa:full": "pnpm zero-qa && pnpm test:e2e"
   },
   "devDependencies": {
     "@changesets/cli": "^2.29.8",

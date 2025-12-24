@@ -8,13 +8,15 @@ Custom slash commands for the monorepo template.
 
 Commands use consistent prefixes for easy discovery:
 
-| Prefix    | Category      | Description               |
-| --------- | ------------- | ------------------------- |
-| `branch-` | Workflow      | Git branch operations     |
-| `deploy-` | DevOps        | Deployment operations     |
-| `design-` | UI/UX         | Design system and reviews |
-| `doc-`    | Documentation | Documentation management  |
-| `git-`    | Git           | Git operations            |
+| Prefix     | Category      | Description               |
+| ---------- | ------------- | ------------------------- |
+| `branch-`  | Workflow      | Git branch operations     |
+| `deploy-`  | DevOps        | Deployment operations     |
+| `design-`  | UI/UX         | Design system and reviews |
+| `doc-`     | Documentation | Documentation management  |
+| `git-`     | Git           | Git operations            |
+| `scrum-`   | Agile         | Scrum/agile management    |
+| `zero-qa-` | Quality       | Zero-QA quality practices |
 
 ---
 
@@ -26,6 +28,9 @@ Commands use consistent prefixes for easy discovery:
 | `/git-commit`    | Generate conventional commit |
 | `/branch-create` | Create feature branch        |
 | `/branch-pr`     | Create pull request          |
+| `/scrum-init`    | Initialize scrum structure   |
+| `/scrum-sprint`  | Manage sprint planning       |
+| `/scrum-backlog` | Manage product backlog       |
 
 ---
 
@@ -90,6 +95,38 @@ refactor/<description>
 | `/design-color-palette`    | `/design-color-palette`         | Generate color palettes        |
 | `/design-system-tokens`    | `/design-system-tokens`         | Manage design system tokens    |
 
+### Scrum/Agile (`scrum-`)
+
+| Command          | Usage                     | Description                        |
+| ---------------- | ------------------------- | ---------------------------------- |
+| `/scrum-init`    | `/scrum-init`             | Initialize scrum project structure |
+| `/scrum-backlog` | `/scrum-backlog <action>` | Manage product backlog             |
+| `/scrum-sprint`  | `/scrum-sprint <action>`  | Manage sprint planning/tracking    |
+| `/scrum-standup` | `/scrum-standup [notes]`  | Record daily standup notes         |
+| `/scrum-review`  | `/scrum-review`           | Conduct sprint review              |
+| `/scrum-retro`   | `/scrum-retro`            | Conduct sprint retrospective       |
+
+**Backlog Actions:** `list`, `add <title>`, `prioritize`, `groom <id>`, `remove <id>`
+
+**Sprint Actions:** `start`, `status`, `end`, `add <item-id>`
+
+### Zero-QA Quality (`zero-qa-`)
+
+| Command           | Usage                    | Description                      |
+| ----------------- | ------------------------ | -------------------------------- |
+| `/zero-qa-init`   | `/zero-qa-init`          | Initialize Zero-QA configuration |
+| `/zero-qa-check`  | `/zero-qa-check [scope]` | Run comprehensive quality checks |
+| `/zero-qa-review` | `/zero-qa-review [path]` | Automated code review            |
+| `/zero-qa-test`   | `/zero-qa-test <action>` | Manage and execute tests         |
+| `/zero-qa-gate`   | `/zero-qa-gate [stage]`  | Quality gate validation          |
+| `/zero-qa-dod`    | `/zero-qa-dod [item-id]` | Definition of Done validation    |
+
+**Check Scopes:** `all`, `quick`, `tests`, `security`
+
+**Test Actions:** `run`, `coverage`, `gaps`, `generate`, `validate`
+
+**Gate Stages:** `commit`, `pr`, `merge`, `deploy`
+
 ---
 
 ## Common Workflows
@@ -108,6 +145,51 @@ pnpm lint && pnpm test
 
 # 4. Create PR
 /branch-pr
+```
+
+### Sprint Workflow
+
+```bash
+# 1. Initialize scrum (first time only)
+/scrum-init
+
+# 2. Add items to backlog
+/scrum-backlog add "User authentication feature"
+
+# 3. Start a new sprint
+/scrum-sprint start
+
+# 4. Daily standups
+/scrum-standup
+
+# 5. End of sprint
+/scrum-review
+/scrum-retro
+/scrum-sprint end
+```
+
+### Zero-QA Workflow
+
+```bash
+# 1. Initialize Zero-QA (first time only)
+/zero-qa-init
+
+# 2. Before starting work
+/zero-qa-check quick
+
+# 3. During development - run tests
+/zero-qa-test run
+
+# 4. Before committing - code review
+/zero-qa-review
+/zero-qa-gate commit
+
+# 5. Before creating PR
+/zero-qa-gate pr
+/zero-qa-dod
+
+# 6. Before merge
+/zero-qa-gate merge
 ```
 
 ---
@@ -141,14 +223,30 @@ pnpm lint && pnpm test
 ├── # DevOps
 ├── deploy-docker.md
 │
-└── # Design System
-    ├── design-search.md
-    ├── design-ui-review.md
-    ├── design-ux-audit.md
-    ├── design-a11y-check.md
-    ├── design-responsive-check.md
-    ├── design-color-palette.md
-    └── design-system-tokens.md
+├── # Design System
+├── design-search.md
+├── design-ui-review.md
+├── design-ux-audit.md
+├── design-a11y-check.md
+├── design-responsive-check.md
+├── design-color-palette.md
+├── design-system-tokens.md
+│
+├── # Scrum/Agile
+├── scrum-init.md
+├── scrum-backlog.md
+├── scrum-sprint.md
+├── scrum-standup.md
+├── scrum-review.md
+├── scrum-retro.md
+│
+└── # Zero-QA
+    ├── zero-qa-init.md
+    ├── zero-qa-check.md
+    ├── zero-qa-review.md
+    ├── zero-qa-test.md
+    ├── zero-qa-gate.md
+    └── zero-qa-dod.md
 ```
 
 ---
