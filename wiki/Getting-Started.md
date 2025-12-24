@@ -50,6 +50,24 @@ pnpm --filter @monorepo/web dev
 
 Navigate to [http://localhost:3000](http://localhost:3000) to see the web app.
 
+## Using Makefile
+
+The project includes a Makefile for common commands:
+
+```bash
+# First-time setup
+make init
+
+# Start development
+make dev
+
+# Run all quality checks
+make check
+
+# Show all available commands
+make help
+```
+
 ## Manual Setup
 
 If you prefer manual setup:

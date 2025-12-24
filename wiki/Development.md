@@ -14,6 +14,35 @@ pnpm dev
 pnpm --filter @monorepo/web dev
 ```
 
+### Using Makefile
+
+The project includes a comprehensive Makefile with 70+ commands:
+
+```bash
+# Show all available commands
+make help
+
+# Common development commands
+make dev           # Start development servers
+make build         # Build all packages
+make test          # Run tests
+make check         # Run all quality checks
+make fix           # Auto-fix linting issues
+
+# Docker commands
+make docker-up     # Start Docker containers
+make docker-down   # Stop containers
+make docker-logs   # View logs
+
+# Kubernetes commands
+make k8s-deploy-dev   # Deploy to development
+make k8s-status       # Show cluster status
+
+# Cleanup
+make clean         # Clean build artifacts
+make reset         # Full reset (clean + install + build)
+```
+
 ### Before Committing
 
 ```bash
@@ -22,8 +51,9 @@ pnpm type-check
 pnpm lint
 pnpm test
 
-# Or run all at once
-pnpm type-check && pnpm lint && pnpm test
+# Or use Makefile
+make check         # Runs lint + type-check + format-check
+make test          # Run tests
 ```
 
 ## Git Workflow

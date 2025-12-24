@@ -1,4 +1,5 @@
 import react from '@vitejs/plugin-react';
+import process from 'node:process';
 import { dirname, resolve } from 'path';
 import { fileURLToPath } from 'url';
 import { defineConfig } from 'vite';
@@ -14,7 +15,8 @@ export default defineConfig({
   },
   server: {
     port: 3000,
-    open: true,
+    open: process.env.DOCKER !== 'true',
+    host: true,
   },
   build: {
     outDir: 'dist',

@@ -9,17 +9,12 @@ RUN apk add --no-cache git curl
 
 WORKDIR /app
 
-# Copy package files
-COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
-
-# Install dependencies
-RUN pnpm install
-
-# Copy source files
-COPY . .
+# Copy entrypoint script
+COPY infra/docker/docker-entrypoint.sh /docker-entrypoint.sh
+RUN chmod +x /docker-entrypoint.sh
 
 # Expose ports
 EXPOSE 3000 5173
 
-# Start development server
-CMD ["pnpm", "dev"]
+# Use entrypoint script to install deps and start dev server
+ENTRYPOINT ["/docker-entrypoint.sh"]

@@ -16,6 +16,7 @@
 ## Development
 
 - [Workflow](Development)
+- [Makefile](Development#using-makefile)
 - [Testing](Development#testing)
 - [Debugging](Development#debugging)
 

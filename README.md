@@ -5,9 +5,9 @@
 </p>
 
 <p align="center">
-  <h1 align="center">Monorepo Template</h1>
+  <h1 align="center">Monorepo Template · 2025 Edition</h1>
   <p align="center">
-    A production-ready TypeScript monorepo template with Turborepo
+    A production-ready 2025 TypeScript monorepo template with Turborepo
     <br />
     <a href="#get-started"><strong>Get Started</strong></a>
     ·
@@ -31,32 +31,33 @@
 
 ## Overview
 
-A modern TypeScript monorepo template featuring Turborepo for high-performance builds, pnpm workspaces for efficient dependency management, and comprehensive tooling for professional development workflows.
+A 2025-ready TypeScript monorepo template featuring Turborepo for high-performance builds, pnpm workspaces for efficient dependency management, Codex-aware agent workflows, and comprehensive tooling for professional development teams.
 
 ### Why This Template?
 
-- **Fast Builds** - Turborepo caching for incremental builds
-- **Type Safety** - TypeScript strict mode across all packages
-- **Modern Tooling** - ESLint 9, Prettier, Vitest, Husky, Commitlint
-- **Workspace Ready** - Shared packages with proper exports
-- **CI/CD Ready** - GitHub Actions workflows included
+- **Fast Builds** - Turborepo 2 caching + remote execution ready for incremental builds
+- **Type Safety** - TypeScript strict mode across all packages with lint-staged enforcement
+- **Modern Tooling** - ESLint 9 flat config, Prettier 3, Vitest 3, Husky 9, Commitlint 19
+- **Agent-Aware** - `.codex/`, `.agent/`, `.claude/`, and `.kiro/` directories document AI workflows
+- **Workspace Ready** - Shared packages export dual bundles with automatic dependency graphs
+- **CI/CD Ready** - GitHub Actions recipes, Changesets releases, and Docker/K8s blueprints
 
 ## Features
 
-| Feature                    | Description                                       |
-| -------------------------- | ------------------------------------------------- |
-| **Monorepo Architecture**  | Turborepo for fast, efficient builds with caching |
-| **TypeScript Strict Mode** | Full type safety across all packages              |
-| **pnpm Workspaces**        | Efficient dependency management                   |
-| **Modern Tooling**         | ESLint 9, Prettier, Vitest, Husky, Commitlint     |
-| **CI/CD Ready**            | GitHub Actions workflows included                 |
-| **Dual Exports**           | ESM and CommonJS support via tsup                 |
-| **Example Web App**        | Vite + React 19 starter included                  |
-| **Infrastructure Ready**   | Docker, Kubernetes (Minikube), Firebase configs   |
-| **Port Management**        | Reserved port ranges (3000-3099) for services     |
-| **Conventional Commits**   | Enforced commit messages with Commitlint          |
-| **Pre-commit Hooks**       | Automated linting and formatting on commit        |
-| **Comprehensive Docs**     | Architecture diagrams, guides, and wiki           |
+| Feature                    | Description                                     |
+| -------------------------- | ----------------------------------------------- |
+| **Monorepo Architecture**  | Turborepo 2.x for fast, cache-aware builds      |
+| **TypeScript Strict Mode** | Full type safety across every workspace         |
+| **pnpm Workspaces**        | Multi-project dependency graph with filters     |
+| **Modern Tooling**         | ESLint 9 flat config + Prettier 3 + Vitest 3    |
+| **Agent Automations**      | Codex, Claude, and Kiro workflows pre-baked     |
+| **CI/CD Ready**            | GitHub Actions, Changesets, and release scripts |
+| **Dual Exports**           | ESM + CJS builds from tsup, typed entrypoints   |
+| **Example Web App**        | React 19 + Vite 6 starter connected to packages |
+| **Infrastructure Ready**   | Docker, K8s/Minikube, Firebase hosting configs  |
+| **Port Management**        | Reserved port ranges (3000-3099) for services   |
+| **Conventional Commits**   | Commitlint + Husky enforce message quality      |
+| **Comprehensive Docs**     | Architecture diagrams, guides, wiki, and AGENTS |
 
 ## Tech Stack
 
@@ -64,35 +65,35 @@ A modern TypeScript monorepo template featuring Turborepo for high-performance b
 
 | Technology                                    | Version | Purpose                                |
 | --------------------------------------------- | ------- | -------------------------------------- |
-| [TypeScript](https://www.typescriptlang.org/) | 5.9+    | Type-safe JavaScript                   |
-| [Node.js](https://nodejs.org/)                | 22+     | JavaScript runtime                     |
-| [pnpm](https://pnpm.io/)                      | 9+      | Fast, disk-efficient package manager   |
-| [Turborepo](https://turbo.build/)             | 2+      | High-performance monorepo build system |
+| [TypeScript](https://www.typescriptlang.org/) | 5.9.x   | Type-safe JavaScript                   |
+| [Node.js](https://nodejs.org/)                | 22 LTS  | JavaScript runtime                     |
+| [pnpm](https://pnpm.io/)                      | 9.15+   | Fast, disk-efficient package manager   |
+| [Turborepo](https://turbo.build/)             | 2.7+    | High-performance monorepo build system |
 
 ### Frontend
 
 | Technology                       | Version | Purpose                          |
 | -------------------------------- | ------- | -------------------------------- |
-| [React](https://react.dev/)      | 19      | UI component library             |
-| [Vite](https://vite.dev/)        | 6+      | Next-generation frontend tooling |
-| [tsup](https://tsup.egoist.dev/) | 8+      | TypeScript bundler (ESM + CJS)   |
+| [React](https://react.dev/)      | 19.0    | UI component library             |
+| [Vite](https://vite.dev/)        | 6.x     | Next-generation frontend tooling |
+| [tsup](https://tsup.egoist.dev/) | 8.x     | TypeScript bundler (ESM + CJS)   |
 
 ### Code Quality
 
 | Technology                                                | Version | Purpose                 |
 | --------------------------------------------------------- | ------- | ----------------------- |
-| [ESLint](https://eslint.org/)                             | 9+      | Code linting            |
-| [Prettier](https://prettier.io/)                          | 3+      | Code formatting         |
-| [Husky](https://typicode.github.io/husky/)                | 9+      | Git hooks               |
-| [Commitlint](https://commitlint.js.org/)                  | 19+     | Commit message linting  |
-| [lint-staged](https://github.com/lint-staged/lint-staged) | 15+     | Pre-commit file linting |
+| [ESLint](https://eslint.org/)                             | 9.x     | Code linting            |
+| [Prettier](https://prettier.io/)                          | 3.x     | Code formatting         |
+| [Husky](https://typicode.github.io/husky/)                | 9.x     | Git hooks               |
+| [Commitlint](https://commitlint.js.org/)                  | 19.x    | Commit message linting  |
+| [lint-staged](https://github.com/lint-staged/lint-staged) | 15.x    | Pre-commit file linting |
 
 ### Testing
 
 | Technology                                               | Version | Purpose                    |
 | -------------------------------------------------------- | ------- | -------------------------- |
-| [Vitest](https://vitest.dev/)                            | 3+      | Unit & integration testing |
-| [@vitest/coverage-v8](https://vitest.dev/guide/coverage) | 3+      | Code coverage              |
+| [Vitest](https://vitest.dev/)                            | 3.x     | Unit & integration testing |
+| [@vitest/coverage-v8](https://vitest.dev/guide/coverage) | 3.x     | Code coverage              |
 
 ### Infrastructure
 
@@ -111,6 +112,15 @@ A modern TypeScript monorepo template featuring Turborepo for high-performance b
 | ------------------------------------------------------ | ----------------------------------- |
 | [GitHub Actions](https://github.com/features/actions)  | Continuous integration & deployment |
 | [Changesets](https://github.com/changesets/changesets) | Version management & changelogs     |
+
+### Agent Tooling
+
+| Technology / Folder | Purpose                                             |
+| ------------------- | --------------------------------------------------- |
+| `.codex/`           | Codex CLI configuration, MCP servers, and workflows |
+| `.agent/`           | Agent-specific workflows (release, scaffold)        |
+| `.claude/`          | Claude command recipes, hooks, and prompts          |
+| `.kiro/`            | Kiro steering docs plus setup scripts               |
 
 ### Configuration
 
@@ -131,7 +141,9 @@ A modern TypeScript monorepo template featuring Turborepo for high-performance b
 - [Creating Packages](#creating-a-new-package)
 - [Creating Apps](#creating-a-new-app)
 - [Scripts](#available-scripts)
+- [Makefile](#makefile)
 - [AI Code Review](#ai-code-review)
+- [Codex Workflow Support](#codex-workflow-support)
 - [Agentic Workflows](#agentic-workflows)
 - [Roadmap](#roadmap)
 - [AI Cost Estimation](#ai-cost-estimation)
@@ -256,6 +268,7 @@ monorepo-template/
 │   └── deploy/              # Deployment guides
 ├── tools/                   # CLI tools
 ├── scripts/                 # Setup and utility scripts
+├── make/                    # Makefile includes by category
 ├── tests/                   # Test suites
 │   ├── unit/                # Unit tests
 │   ├── integration/         # Integration tests
@@ -349,7 +362,7 @@ const client = new Anthropic();
 
 async function runAgent(input: string) {
   const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
+    model: 'claude-3-5-sonnet-latest',
     max_tokens: 1024,
     messages: [{ role: 'user', content: input }],
   });
@@ -697,6 +710,66 @@ pnpm test --filter="@monorepo/*"
 pnpm dev --filter="./apps/*"
 ```
 
+## Makefile
+
+This project includes a comprehensive Makefile with 70+ commands organized into 14 categories.
+
+### Quick Reference
+
+```bash
+make help          # Show all available commands
+make info          # Display project information
+make dev           # Start development servers
+make build         # Build all packages
+make test          # Run tests
+make docker-up     # Start Docker containers
+make k8s-deploy-dev # Deploy to Kubernetes
+```
+
+### Command Categories
+
+| Category             | File               | Commands                                       |
+| -------------------- | ------------------ | ---------------------------------------------- |
+| Setup & Installation | `make/setup.mk`    | `install`, `setup`, `init`                     |
+| Development          | `make/dev.mk`      | `dev`, `dev-web`, `dev-packages`               |
+| Building             | `make/build.mk`    | `build`, `build-packages`, `build-clean`       |
+| Code Quality         | `make/quality.mk`  | `lint`, `format`, `type-check`, `check`, `fix` |
+| Testing              | `make/test.mk`     | `test`, `test-watch`, `test-coverage`          |
+| Docker               | `make/docker.mk`   | `docker-up`, `docker-down`, `docker-logs`      |
+| Kubernetes           | `make/k8s.mk`      | `k8s-start`, `k8s-deploy-*`, `k8s-status`      |
+| Firebase             | `make/firebase.mk` | `firebase-deploy`, `firebase-emulators`        |
+| Git                  | `make/git.mk`      | `status`, `diff`, `log`, `pull`, `push`        |
+| Release              | `make/release.mk`  | `changeset`, `version`, `release`, `tag`       |
+| Cleanup              | `make/clean.mk`    | `clean`, `clean-all`, `reset`                  |
+| Documentation        | `make/docs.mk`     | `docs-serve`, `docs-wiki-sync`                 |
+| Utilities            | `make/utils.mk`    | `info`, `outdated`, `audit`, `tree`            |
+| CI/CD                | `make/ci.mk`       | `ci-install`, `ci-build`, `ci-all`             |
+
+### Examples
+
+```bash
+# Full development workflow
+make init              # First-time setup
+make dev               # Start development
+
+# Docker workflow
+make docker-build      # Build images
+make docker-up         # Start containers
+make docker-logs       # View logs
+make docker-down       # Stop containers
+
+# Release workflow
+make check             # Run all quality checks
+make test              # Run tests
+make changeset         # Create changeset
+make release-full      # Build, test, tag, push
+
+# Cleanup
+make clean             # Clean build artifacts
+make clean-all         # Deep clean everything
+make reset             # Clean + install + build
+```
+
 ## AI Code Review
 
 Set up an AI agent to automatically review pull requests on GitHub.
@@ -781,7 +854,7 @@ jobs:
             const diff = execSync(`git diff origin/${process.env.GITHUB_BASE_REF}...HEAD -- ${files.join(' ')}`).toString();
 
             const response = await client.messages.create({
-              model: 'claude-sonnet-4-20250514',
+              model: 'claude-3-5-sonnet-latest',
               max_tokens: 4096,
               messages: [{
                 role: 'user',
@@ -899,38 +972,59 @@ Codex CLI users can rely on the `.codex/` folder for repository-aware automation
 
 Codex automatically surfaces these playbooks via `codex workflow list`. When you add new workflows, drop Markdown guides into `.codex/workflows/` and reference them here. This keeps AI assistants aligned with the same pipelines humans follow.
 
+## Agentic Workflows
+
+This repository carries multiple agent-focused control points so automation and human contributors stay in sync in 2025.
+
+| Directory / File                       | Purpose                                                                                         |
+| -------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `.agent/workflows/*.md`                | Workflow cards for scaffolding agents or publishing releases.                                   |
+| `.claude/commands/` & `.claude/hooks/` | Claude-specific slash commands, guardrails, and prompts for the Claude Desktop/CLI ecosystem.   |
+| `.kiro/steering/`, `.kiro/workflows/`  | Kiro steering documents (development standards, troubleshooting) and repeatable setup routines. |
+| `AGENTS.md`                            | Human-readable contributor guide summarizing structure, commands, and expectations.             |
+
+**Typical agent loop (2025):**
+
+1. Run `codex workflow run bootstrap` or follow `.agent/workflows/scaffold-agent.md` to create a workspace in `agents/<name>`.
+2. Use `.claude/commands/doc-create.md` or `.agent/workflows/release.md` when pairing with Claude to keep documentation and releases consistent.
+3. Consult `.kiro/steering/development-workflow.md` before large refactors; it captures the up-to-date sequencing of pnpm, turbo, and Docker commands.
+4. Document new behaviors inside `docs/architecture/agent-*.md` and reflect them inside `AGENTS.md` so every automation entry stays current.
+
+These guardrails ensure Codex, Claude, Kiro, and human contributors share the same mental model when shipping new agent packages or workflows.
+
 ## Roadmap
 
 Future plans and upcoming features for the monorepo template.
 
 ### AI Provider Integrations
 
-| Provider                                                                        | Status       | Description                     |
-| ------------------------------------------------------------------------------- | ------------ | ------------------------------- |
-| [Claude (Anthropic)](https://anthropic.com)                                     | ✅ Supported | Claude 3.5 Sonnet, Opus, Haiku  |
-| [OpenAI](https://openai.com)                                                    | ✅ Supported | GPT-4o, GPT-4 Turbo             |
-| [Google Gemini](https://ai.google.dev)                                          | ✅ Supported | Gemini Pro, Gemini Ultra        |
-| [Ollama](https://ollama.ai)                                                     | ✅ Supported | Local LLMs (Llama, Mistral)     |
-| [ChatGLM (Zhipu AI)](https://open.bigmodel.cn)                                  | 🔜 Planned   | GLM-4, Chinese language support |
-| [Mistral AI](https://mistral.ai)                                                | 🔜 Planned   | Mistral Large, Mixtral          |
-| [Cohere](https://cohere.com)                                                    | 🔜 Planned   | Command, Embed models           |
-| [AWS Bedrock](https://aws.amazon.com/bedrock)                                   | 🔜 Planned   | Multi-provider via AWS          |
-| [Azure OpenAI](https://azure.microsoft.com/products/ai-services/openai-service) | 🔜 Planned   | Enterprise OpenAI               |
-| [DeepSeek](https://deepseek.com)                                                | 🔜 Planned   | DeepSeek Coder, Chat            |
-| [Qwen (Alibaba)](https://qwenlm.github.io)                                      | 🔜 Planned   | Qwen-72B, multilingual          |
+| Provider                                                                        | Status         | Description                                  |
+| ------------------------------------------------------------------------------- | -------------- | -------------------------------------------- |
+| [Claude (Anthropic)](https://anthropic.com)                                     | ✅ Supported   | Claude 3.5 Sonnet/Haiku/Opus (2025 releases) |
+| [OpenAI](https://openai.com)                                                    | ✅ Supported   | GPT-4.1, GPT-4o, o1-mini/o1-preview          |
+| [Google Gemini](https://ai.google.dev)                                          | ✅ Supported   | Gemini 1.5 Pro & Flash                       |
+| [Ollama](https://ollama.ai)                                                     | ✅ Supported   | Local LLMs (Llama 3.1, Mistral, Qwen)        |
+| [DeepSeek](https://deepseek.com)                                                | ✅ Supported   | DeepSeek V3 + DeepSeek-Coder                 |
+| [ChatGLM (Zhipu AI)](https://open.bigmodel.cn)                                  | 🚧 In Progress | GLM-4 for Chinese-first workflows            |
+| [Mistral AI](https://mistral.ai)                                                | 🚧 In Progress | Mixtral & Mistral Large integrations         |
+| [Cohere](https://cohere.com)                                                    | 🔜 Planned     | Command R+, Embed v3                         |
+| [AWS Bedrock](https://aws.amazon.com/bedrock)                                   | 🔜 Planned     | Multi-provider orchestration                 |
+| [Azure OpenAI](https://azure.microsoft.com/products/ai-services/openai-service) | 🔜 Planned     | Enterprise OpenAI endpoints                  |
+| [Qwen (Alibaba)](https://qwenlm.github.io)                                      | 🔜 Planned     | Qwen 2.5 multilingual family                 |
+| [xAI (Grok)](https://x.ai)                                                      | 🔜 Planned     | Grok-2 compliance-friendly deployment        |
 
 ### Agent Framework
 
-| Feature                   | Status         | Description                     |
-| ------------------------- | -------------- | ------------------------------- |
-| Simple Agent              | ✅ Done        | Single-turn completion          |
-| Tool Agent                | ✅ Done        | Function calling support        |
-| Stateful Agent            | 🚧 In Progress | Conversation memory             |
-| Multi-Agent Orchestration | 🔜 Planned     | Coordinate multiple agents      |
-| Agent Memory              | 🔜 Planned     | Long-term memory with vector DB |
-| Streaming Responses       | 🔜 Planned     | Real-time token streaming       |
-| Agent Metrics             | 🔜 Planned     | Token usage, latency tracking   |
-| Agent Playground          | 🔜 Planned     | Web UI for testing agents       |
+| Feature                   | Status         | Description                                 |
+| ------------------------- | -------------- | ------------------------------------------- |
+| Simple Agent              | ✅ Done        | Single-turn completion                      |
+| Tool Agent                | ✅ Done        | Function calling + tool router support      |
+| Stateful Agent            | ✅ Done        | Redis-backed conversation memory            |
+| Multi-Agent Orchestration | 🚧 In Progress | Coordinate multiple agents via workflows    |
+| Agent Memory              | 🚧 In Progress | Long-term vector memory adapters (Pinecone) |
+| Streaming Responses       | 🚧 In Progress | Real-time SSE token streaming               |
+| Agent Metrics             | 🔜 Planned     | Token usage, latency, and success analytics |
+| Agent Playground          | 🔜 Planned     | Web UI for testing and sharing agents       |
 
 ### Infrastructure
 
@@ -1026,7 +1120,9 @@ Future plans and upcoming features for the monorepo template.
 
 Estimated costs for AI provider usage in agent development.
 
-### Token Pricing (as of 2024)
+### Token Pricing (as of Q1 2025)
+
+Pricing references each provider's public sheets published in January 2025—confirm against current pricing before large-scale deployments.
 
 #### Claude (Anthropic)
 
@@ -1167,11 +1263,11 @@ Estimated costs for AI provider usage in agent development.
 const modelSelector = (taskComplexity: 'low' | 'medium' | 'high') => {
   switch (taskComplexity) {
     case 'low':
-      return 'claude-3-5-haiku-20241022'; // $0.25/1M
+      return 'claude-3-5-haiku-latest'; // $0.25/1M
     case 'medium':
-      return 'claude-3-5-sonnet-20241022'; // $3/1M
+      return 'claude-3-5-sonnet-latest'; // $3/1M
     case 'high':
-      return 'claude-3-opus-20240229'; // $15/1M
+      return 'claude-3-opus-latest'; // $15/1M
   }
 };
 ```
@@ -1181,7 +1277,7 @@ const modelSelector = (taskComplexity: 'low' | 'medium' | 'high') => {
 ```typescript
 // Cache system prompts to reduce input costs by 90%
 const response = await client.messages.create({
-  model: 'claude-3-5-sonnet-20241022',
+  model: 'claude-3-5-sonnet-latest',
   max_tokens: 1024,
   system: [
     {
@@ -1201,7 +1297,7 @@ const response = await client.messages.create({
 const batchReview = async (files: string[]) => {
   const combined = files.join('\n---FILE SEPARATOR---\n');
   const response = await client.messages.create({
-    model: 'claude-3-5-haiku-20241022',
+    model: 'claude-3-5-haiku-latest',
     messages: [
       {
         role: 'user',
@@ -1218,7 +1314,7 @@ const batchReview = async (files: string[]) => {
 ```typescript
 // Limit output tokens for predictable costs
 const response = await client.messages.create({
-  model: 'claude-3-5-sonnet-20241022',
+  model: 'claude-3-5-sonnet-latest',
   max_tokens: 500, // Cap output length
   messages: [{ role: 'user', content: input }],
 });
