@@ -141,6 +141,105 @@ section h2 {
   color: #fff;
 }
 
+/* API Section */
+.api-section {
+  text-align: center;
+}
+
+.api-description {
+  color: #999;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.api-description strong {
+  color: #f472b6;
+}
+
+.api-endpoints {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.endpoints-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.endpoints-table th,
+.endpoints-table td {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.endpoints-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: #999;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.endpoints-table td {
+  color: #ddd;
+  font-size: 0.9rem;
+}
+
+.endpoints-table tr:last-child td {
+  border-bottom: none;
+}
+
+.endpoints-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.endpoints-table code {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  color: #61dafb;
+  font-size: 0.85rem;
+}
+
+.method {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.method-get {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.method-post {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+}
+
+.method-put {
+  background: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+}
+
+.method-delete {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.api-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
 /* Quick Start */
 .code-block {
   background: #1a1a2e;
@@ -333,5 +432,39 @@ section h2 {
 
   .footer {
     border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .api-description {
+    color: #666;
+  }
+
+  .api-description strong {
+    color: #db2777;
+  }
+
+  .endpoints-table {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .endpoints-table th {
+    background: rgba(0, 0, 0, 0.04);
+    color: #666;
+  }
+
+  .endpoints-table th,
+  .endpoints-table td {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .endpoints-table td {
+    color: #333;
+  }
+
+  .endpoints-table tr:hover td {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .endpoints-table code {
+    color: #0284c7;
   }
 }

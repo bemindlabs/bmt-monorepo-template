@@ -1,5 +1,3 @@
-import { generateId } from '@monorepo/core';
-import { HTTP_STATUS } from '@monorepo/shared';
 import type {
   ApiResponse,
   CreateUserInput,
@@ -7,6 +5,19 @@ import type {
   UpdateUserInput,
   User,
 } from '../types';
+
+// Inline utilities to make API standalone (mockup)
+function generateId(): string {
+  return `${Date.now()}-${Math.random().toString(36).substring(2, 9)}`;
+}
+
+const HTTP_STATUS = {
+  OK: 200,
+  CREATED: 201,
+  BAD_REQUEST: 400,
+  NOT_FOUND: 404,
+  INTERNAL_SERVER_ERROR: 500,
+} as const;
 
 // In-memory store for demo purposes
 const users: Map<string, User> = new Map();

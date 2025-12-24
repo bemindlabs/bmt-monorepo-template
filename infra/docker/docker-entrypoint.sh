@@ -10,8 +10,8 @@ pnpm --filter './packages/*' build
 # Start appropriate service based on SERVICE env var
 case "${SERVICE:-web}" in
   api)
-    echo "🚀 Starting API server (Bun)..."
-    exec pnpm --filter @monorepo/api dev
+    echo "🚀 Starting API server (Node/tsx)..."
+    exec pnpm --filter @monorepo/api dev:node
     ;;
   web)
     echo "🚀 Starting web development server..."

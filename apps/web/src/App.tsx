@@ -24,6 +24,15 @@ const techStack = [
   'Prettier',
 ];
 
+const apiEndpoints = [
+  { method: 'GET', path: '/health', desc: 'Health check' },
+  { method: 'GET', path: '/users', desc: 'List all users' },
+  { method: 'POST', path: '/users', desc: 'Create a user' },
+  { method: 'GET', path: '/users/:id', desc: 'Get user by ID' },
+  { method: 'PUT', path: '/users/:id', desc: 'Update user' },
+  { method: 'DELETE', path: '/users/:id', desc: 'Delete user' },
+];
+
 function App() {
   return (
     <main className="app">
@@ -63,6 +72,60 @@ function App() {
               {tech}
             </span>
           ))}
+        </div>
+      </section>
+
+      <section className="api-section">
+        <h2>REST API</h2>
+        <p className="api-description">
+          Built with <strong>Bun</strong> runtime for blazing-fast performance. Includes OpenAPI 3.0
+          documentation with Swagger UI.
+        </p>
+        <div className="api-endpoints">
+          <table className="endpoints-table">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Endpoint</th>
+                <th>Description</th>
+              </tr>
+            </thead>
+            <tbody>
+              {apiEndpoints.map((endpoint) => (
+                <tr key={`${endpoint.method}-${endpoint.path}`}>
+                  <td>
+                    <span className={`method method-${endpoint.method.toLowerCase()}`}>
+                      {endpoint.method}
+                    </span>
+                  </td>
+                  <td>
+                    <code>{endpoint.path}</code>
+                  </td>
+                  <td>{endpoint.desc}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <div className="api-links">
+          <a
+            href="http://localhost:3010/docs/ui"
+            target="_blank"
+            rel="noreferrer"
+            className="link-button"
+            aria-label="Open Swagger UI documentation (opens in new tab)"
+          >
+            Swagger UI
+          </a>
+          <a
+            href="http://localhost:3010/docs"
+            target="_blank"
+            rel="noreferrer"
+            className="link-button"
+            aria-label="View OpenAPI JSON specification (opens in new tab)"
+          >
+            OpenAPI Spec
+          </a>
         </div>
       </section>
 

@@ -5,18 +5,17 @@
   "type": "module",
   "scripts": {
     "dev": "bun run --watch src/index.ts",
+    "dev:node": "tsx watch src/index.ts",
     "start": "bun run src/index.ts",
+    "start:node": "tsx src/index.ts",
     "build": "bun build src/index.ts --outdir=dist --target=bun",
     "type-check": "tsc --noEmit",
     "lint": "eslint src/"
   },
-  "dependencies": {
-    "@monorepo/config": "workspace:*",
-    "@monorepo/core": "workspace:*",
-    "@monorepo/shared": "workspace:*"
-  },
+  "dependencies": {},
   "devDependencies": {
     "@types/bun": "^1.2.14",
+    "tsx": "^4.19.0",
     "typescript": "^5.9.0-beta"
   }
 }

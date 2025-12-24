@@ -1,3 +1,4 @@
+import { createServer } from 'node:http';
 import { addCorsHeaders, handleCors } from './middleware/cors';
 import { logRequest } from './middleware/logger';
 import { matchRoute } from './routes';
@@ -10,7 +11,7 @@ function getApiInfo(): Response {
   const info = {
     name: 'BMT Monorepo API',
     version: VERSION,
-    description: 'Sample REST API built with Bun',
+    description: 'Sample REST API (mockup)',
     endpoints: {
       health: '/health',
       docs: '/docs',
@@ -39,57 +40,106 @@ function notFound(): Response {
   return Response.json(response, { status: 404 });
 }
 
-const server = Bun.serve({
-  port: PORT,
-  async fetch(req) {
-    const startTime = performance.now();
-    const url = new URL(req.url);
-    const path = url.pathname;
-    const method = req.method;
+async function handleRequest(req: Request): Promise<Response> {
+  const startTime = performance.now();
+  const url = new URL(req.url);
+  const path = url.pathname;
+  const method = req.method;
 
-    // Handle CORS preflight
-    const corsResponse = handleCors(req);
-    if (corsResponse) {
-      logRequest(req, 204, performance.now() - startTime);
-      return corsResponse;
-    }
+  // Handle CORS preflight
+  const corsResponse = handleCors(req);
+  if (corsResponse) {
+    logRequest(req, 204, performance.now() - startTime);
+    return corsResponse;
+  }
 
-    let response: Response;
+  let response: Response;
 
-    try {
-      // Root endpoint
-      if (path === '/' && method === 'GET') {
-        response = getApiInfo();
+  try {
+    // Root endpoint
+    if (path === '/' && method === 'GET') {
+      response = getApiInfo();
+    } else {
+      // Match route
+      const match = matchRoute(method, path);
+      if (match) {
+        response = await match.handler(req, match.params);
       } else {
-        // Match route
-        const match = matchRoute(method, path);
-        if (match) {
-          response = await match.handler(req, match.params);
-        } else {
-          response = notFound();
-        }
+        response = notFound();
       }
-    } catch (error) {
-      console.error('Request error:', error);
-      const errorResponse: ApiResponse = {
-        success: false,
-        error: 'Internal Server Error',
-      };
-      response = Response.json(errorResponse, { status: 500 });
+    }
+  } catch (error) {
+    console.error('Request error:', error);
+    const errorResponse: ApiResponse = {
+      success: false,
+      error: 'Internal Server Error',
+    };
+    response = Response.json(errorResponse, { status: 500 });
+  }
+
+  // Add CORS headers and log
+  response = addCorsHeaders(response);
+  logRequest(req, response.status, performance.now() - startTime);
+
+  return response;
+}
+
+// Check if running in Bun
+const isBun = typeof globalThis.Bun !== 'undefined';
+
+let server: unknown;
+
+if (isBun) {
+  // Use Bun.serve for Bun runtime
+  server = globalThis.Bun.serve({
+    port: PORT,
+    fetch: handleRequest,
+  });
+} else {
+  // Use Node.js http for Node runtime
+  const nodeServer = createServer(async (req, res) => {
+    const url = `http://localhost:${PORT}${req.url}`;
+    const headers = new Headers();
+    for (const [key, value] of Object.entries(req.headers)) {
+      if (value) headers.set(key, Array.isArray(value) ? value.join(', ') : value);
     }
 
-    // Add CORS headers and log
-    response = addCorsHeaders(response);
-    logRequest(req, response.status, performance.now() - startTime);
+    // Read body for POST/PUT requests
+    let body: string | undefined;
+    if (req.method === 'POST' || req.method === 'PUT') {
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) {
+        chunks.push(chunk);
+      }
+      body = Buffer.concat(chunks).toString();
+    }
 
-    return response;
-  },
-});
+    const request = new Request(url, {
+      method: req.method,
+      headers,
+      body: body,
+    });
+
+    const response = await handleRequest(request);
+
+    res.statusCode = response.status;
+    response.headers.forEach((value, key) => {
+      res.setHeader(key, value);
+    });
+
+    const responseBody = await response.text();
+    res.end(responseBody);
+  });
+
+  nodeServer.listen(PORT);
+  server = nodeServer;
+}
 
 console.log(`
   ╔══════════════════════════════════════════════════╗
   ║                                                  ║
   ║   🚀 BMT Monorepo API v${VERSION}                  ║
+  ║   Runtime: ${isBun ? 'Bun' : 'Node.js'}                              ║
   ║                                                  ║
   ║   Server running at:                             ║
   ║   → http://localhost:${PORT}                       ║
