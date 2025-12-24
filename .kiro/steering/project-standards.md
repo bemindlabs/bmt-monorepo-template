@@ -39,13 +39,23 @@ This is a TypeScript monorepo template using Turborepo, pnpm workspaces, and mod
 ## File Structure
 
 ```
-├── apps/           # Applications
-├── packages/       # Shared packages
-├── tools/          # Development tools
-├── tests/          # Test suites (unit, integration, e2e)
-├── infra/          # Infrastructure and deployment configs
+├── apps/           # Runnable applications (apps/web is Vite + React entry point)
+├── packages/       # Reusable logic
+│   ├── core/       # Domain services
+│   ├── shared/     # UI components and utilities
+│   └── config/     # Environment defaults
+├── tools/          # Development automation
+├── scripts/        # Build and deployment scripts
+├── tests/          # Centralized test suites
+│   ├── unit/       # Unit tests mirroring runtime modules
+│   ├── integration/# Integration tests
+│   ├── e2e/        # End-to-end tests
+│   ├── fixtures/   # Shared test data
+│   ├── helpers/    # Cross-cutting mocks
+│   └── setup.ts    # Global test hooks
+├── infra/          # Infrastructure (Docker, Kubernetes, Firebase)
 ├── docs/           # Documentation
-└── scripts/        # Build and deployment scripts
+└── wiki/           # Additional documentation
 ```
 
 ## Commands

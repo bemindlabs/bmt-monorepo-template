@@ -1,7 +1,12 @@
 # Cursor Rules for Monorepo Template
 
 ## Project Overview
-This is a TypeScript monorepo using Turborepo, pnpm workspaces, and modern tooling. The project follows strict TypeScript conventions, uses conventional commits, and maintains high code quality standards.
+This is a TypeScript monorepo using Turborepo, pnpm workspaces, and modern tooling. The project follows strict TypeScript conventions, uses conventional commits, and maintains high code quality standards. This repository supports agentic workflows for automating common development tasks.
+
+## Important References
+- See `AGENTS.md` for repository guidelines and coding standards
+- See `README.md` for project overview and quick start
+- See `docs/` for detailed documentation
 
 ## Project Structure
 
@@ -50,6 +55,14 @@ function processData(input: any): any {
 
 ## Code Style
 
+### Formatting Rules
+- **Indentation**: Two spaces (not tabs)
+- **Quotes**: Single quotes for strings
+- **Trailing commas**: ES5 style (objects, arrays, function parameters)
+- **Semicolons**: Always use semicolons
+- **Line length**: 100 characters max
+- **Arrow functions**: Always use parentheses around parameters
+
 ### ESLint Rules
 - Follow ESLint 9 configuration in `eslint.config.mjs`
 - No unused variables (use `_` prefix for intentionally unused)
@@ -59,12 +72,14 @@ function processData(input: any): any {
 
 ### Prettier
 - Auto-format on save
-- Organize imports automatically
+- Organize imports automatically via `prettier-plugin-organize-imports`
 - Format JSON, Markdown, YAML files
+- Tailwind CSS plugin enabled for class sorting
 
 ### Import Organization
 - Group imports: external → internal packages → relative
 - Use path aliases where configured (`@/` for `src/` in apps)
+- Let Prettier organize imports automatically
 
 ## Build System
 
@@ -128,15 +143,28 @@ describe('FeatureName', () => {
 ## Git Workflow
 
 ### Commit Convention
-Follow [Conventional Commits](https://www.conventionalcommits.org/):
+Follow [Conventional Commits](https://www.conventionalcommits.org/) as enforced by Commitlint:
 - `feat:` - New feature
 - `fix:` - Bug fix
 - `docs:` - Documentation changes
-- `chore:` - Maintenance tasks
-- `test:` - Test additions/changes
+- `style:` - Code style changes (formatting, whitespace)
 - `refactor:` - Code refactoring
-- `style:` - Code style changes (formatting)
 - `perf:` - Performance improvements
+- `test:` - Test additions/changes
+- `build:` - Build system changes
+- `ci:` - CI/CD changes
+- `chore:` - Maintenance tasks
+- `revert:` - Revert previous commit
+
+### Commit Scopes
+Use scopes from `commitlint.config.js`:
+- Packages: `core`, `shared`, `config`
+- Apps: `app`
+- Tools: `cli`
+- Other: `deps`, `infra`, `docs`, `ci`
+
+**Format**: `type(scope): subject` (lower-case, max 100 chars)
+**Example**: `feat(core): add auth session guard`
 
 ### Pre-commit Hooks
 - Husky runs lint-staged

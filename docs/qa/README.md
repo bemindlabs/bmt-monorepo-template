@@ -1,36 +1,51 @@
-# Zero-QA Testing
+# Kiro QA Testing
 
-AI-powered test generation and quality assurance automation.
+AI-powered test generation and quality assurance automation using Kiro's intelligent workflow system.
 
-## Commands Overview
+## Kiro QA Capabilities
 
-| Command        | Description                            |
-| -------------- | -------------------------------------- |
-| `/qa-generate` | Generate tests with multi-agent system |
-| `/qa-local`    | Run test generation locally            |
-| `/qa-zero`     | Run Zero QA validation pipeline        |
+| Feature              | Description                                 |
+| -------------------- | ------------------------------------------- |
+| Smart Generation     | Context-aware test generation using Kiro AI |
+| Workflow Integration | Seamless integration with Kiro workflows    |
+| Multi-Agent System   | Specialized agents for different test types |
+| Repository Analysis  | Deep understanding of monorepo structure    |
 
-## /qa-generate
+## Kiro Test Generation
 
-Generate comprehensive test suite using parallel AI agents.
+Generate comprehensive test suites using Kiro's intelligent analysis and multi-agent system.
 
-### Usage
+### Usage with Kiro
 
-```bash
-/qa-generate <target-path>
+Simply ask Kiro to generate tests for your code:
+
 ```
+Generate tests for packages/core/src/auth
+Create unit tests for apps/web/src/components/Button.tsx
+Add integration tests for the payment flow
+```
+
+### Kiro Workflow Integration
+
+Kiro automatically:
+
+- Analyzes your monorepo structure
+- Understands TypeScript configurations
+- Follows project coding standards
+- Integrates with existing test setup
+- Respects Turborepo build pipeline
 
 ### Examples
 
-```bash
+```
 # Generate tests for entire domain
-/qa-generate apps/core-services/service-core/src/domain
+"Generate comprehensive tests for apps/core-services/service-core/src/domain"
 
 # Generate tests for single file
-/qa-generate packages/utils/src/formatters.ts
+"Create unit tests for packages/shared/src/http-client.ts"
 
 # Generate tests for application layer
-/qa-generate apps/core-services/service-pos/src/application
+"Add integration tests for apps/web/src/features/auth"
 ```
 
 ### Multi-Agent System

@@ -1,0 +1,82 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+.next/
+out/
+.turbo/
+*.tsbuildinfo
+
+# Environment files (may contain secrets)
+.env
+.env.local
+.env.*.local
+!.env.example
+!.env.template
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*.sublime-*
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets (CRITICAL - never include in context)
+*.key
+*.pem
+*.p12
+*.pfx
+*.keystore
+*credentials*.json
+*secrets*.json
+firebase-adminsdk*.json
+service-account*.json
+
+# Cache
+.cache/
+.temp/
+.tmp/
+.parcel-cache/
+
+# Storybook
+storybook-static/
+
+# Mobile
+*.jks
+*.mobileprovision
+
+# Large generated files
+*.map
+*.min.js
+*.min.css
+
+# Documentation builds
+docs/_build/
+docs/.vuepress/dist/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.backup
+
