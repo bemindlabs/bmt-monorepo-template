@@ -82,7 +82,7 @@ export function getUser(id: string): Response {
 
 export async function createUserHandler(req: Request): Promise<Response> {
   try {
-    const input: CreateUserInput = await req.json();
+    const input = (await req.json()) as CreateUserInput;
 
     if (!input.name || !input.email) {
       const response: ApiResponse = {
@@ -133,7 +133,7 @@ export async function updateUser(id: string, req: Request): Promise<Response> {
   }
 
   try {
-    const input: UpdateUserInput = await req.json();
+    const input = (await req.json()) as UpdateUserInput;
 
     if (input.email) {
       const existingUser = Array.from(users.values()).find(
