@@ -1,6 +1,7 @@
+import packageJson from '../../../package.json';
 import './App.css';
 
-const VERSION = '0.1.1';
+const VERSION = packageJson.version;
 
 const features = [
   { icon: '🚀', iconLabel: 'Rocket', title: 'Turborepo', desc: 'High-performance build system' },
