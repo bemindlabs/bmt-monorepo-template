@@ -1,0 +1,30 @@
+# robots.txt for BMT Monorepo Template
+# Allow all search engines to crawl the entire site
+
+User-agent: *
+Allow: /
+
+# Specific search engine directives
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Sitemap location
+Sitemap: https://bemindlabs.github.io/bmt-monorepo-template/sitemap.xml
+
+# Crawl-delay (optional, be polite to servers)
+# Crawl-delay: 1

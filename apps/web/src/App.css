@@ -1,11 +1,18 @@
 .app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 2rem;
 }
 
 /* Header */
 .header {
+  width: 100%;
+  max-width: 1200px;
   text-align: center;
   margin-bottom: 4rem;
   padding-top: 2rem;
@@ -33,15 +40,18 @@
 }
 
 .tagline {
-  color: #888;
+  color: #999;
   font-size: 1.2rem;
   max-width: 600px;
   margin: 1rem auto;
 }
 
 .version {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
   background: rgba(100, 108, 255, 0.1);
   border: 1px solid rgba(100, 108, 255, 0.3);
   border-radius: 20px;
@@ -51,6 +61,8 @@
 
 /* Sections */
 section {
+  width: 100%;
+  max-width: 1200px;
   margin-bottom: 4rem;
 }
 
@@ -97,7 +109,7 @@ section h2 {
 
 .feature-card p {
   margin: 0;
-  color: #888;
+  color: #999;
   font-size: 0.9rem;
 }
 
@@ -110,7 +122,11 @@ section h2 {
 }
 
 .tech-tag {
-  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
@@ -123,6 +139,105 @@ section h2 {
   background: rgba(100, 108, 255, 0.1);
   border-color: rgba(100, 108, 255, 0.3);
   color: #fff;
+}
+
+/* API Section */
+.api-section {
+  text-align: center;
+}
+
+.api-description {
+  color: #999;
+  font-size: 1.1rem;
+  margin-bottom: 2rem;
+}
+
+.api-description strong {
+  color: #f472b6;
+}
+
+.api-endpoints {
+  max-width: 600px;
+  margin: 0 auto 2rem;
+}
+
+.endpoints-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.endpoints-table th,
+.endpoints-table td {
+  padding: 0.875rem 1rem;
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.endpoints-table th {
+  background: rgba(255, 255, 255, 0.05);
+  color: #999;
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.endpoints-table td {
+  color: #ddd;
+  font-size: 0.9rem;
+}
+
+.endpoints-table tr:last-child td {
+  border-bottom: none;
+}
+
+.endpoints-table tr:hover td {
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.endpoints-table code {
+  font-family: 'Fira Code', 'Consolas', monospace;
+  color: #61dafb;
+  font-size: 0.85rem;
+}
+
+.method {
+  display: inline-block;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.method-get {
+  background: rgba(34, 197, 94, 0.2);
+  color: #22c55e;
+}
+
+.method-post {
+  background: rgba(59, 130, 246, 0.2);
+  color: #3b82f6;
+}
+
+.method-put {
+  background: rgba(234, 179, 8, 0.2);
+  color: #eab308;
+}
+
+.method-delete {
+  background: rgba(239, 68, 68, 0.2);
+  color: #ef4444;
+}
+
+.api-links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
 }
 
 /* Quick Start */
@@ -174,6 +289,11 @@ section h2 {
   transform: translateY(-2px);
 }
 
+.link-button:focus-visible {
+  outline: 3px solid #646cff;
+  outline-offset: 2px;
+}
+
 .link-button.primary {
   background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
   border: none;
@@ -186,15 +306,16 @@ section h2 {
 
 /* Footer */
 .footer {
+  width: 100%;
   text-align: center;
   padding: 2rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 4rem;
+  margin-top: auto;
 }
 
 .footer p {
   margin: 0.5rem 0;
-  color: #888;
+  color: #999;
 }
 
 .footer a {
@@ -203,6 +324,11 @@ section h2 {
 
 .footer a:hover {
   color: #535bf2;
+}
+
+.footer a:focus-visible {
+  outline: 2px solid #646cff;
+  outline-offset: 2px;
 }
 
 .copyright {
@@ -253,6 +379,17 @@ section h2 {
   }
 }
 
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
 /* Light mode support */
 @media (prefers-color-scheme: light) {
   section h2 {
@@ -295,5 +432,39 @@ section h2 {
 
   .footer {
     border-color: rgba(0, 0, 0, 0.1);
+  }
+
+  .api-description {
+    color: #666;
+  }
+
+  .api-description strong {
+    color: #db2777;
+  }
+
+  .endpoints-table {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .endpoints-table th {
+    background: rgba(0, 0, 0, 0.04);
+    color: #666;
+  }
+
+  .endpoints-table th,
+  .endpoints-table td {
+    border-color: rgba(0, 0, 0, 0.08);
+  }
+
+  .endpoints-table td {
+    color: #333;
+  }
+
+  .endpoints-table tr:hover td {
+    background: rgba(0, 0, 0, 0.02);
+  }
+
+  .endpoints-table code {
+    color: #0284c7;
   }
 }
