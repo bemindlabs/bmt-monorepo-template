@@ -5,7 +5,7 @@ import { matchRoute } from './routes';
 import type { ApiResponse } from './types';
 
 const PORT = 3010;
-const VERSION = '0.1.1';
+const VERSION = '0.1.2';
 
 function getApiInfo(): Response {
   const info = {

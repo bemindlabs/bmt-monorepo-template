@@ -15,6 +15,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet
 
+## [0.1.2] - 2024-12-24
+
+### Added
+
+#### API Application
+
+- `@monorepo/api` - Bun/Node.js REST API with OpenAPI documentation
+  - Health check endpoint (`/health`)
+  - Users CRUD endpoints (`/users`, `/users/:id`)
+  - OpenAPI 3.0 specification (`/docs`)
+  - Swagger UI documentation (`/docs/ui`)
+  - CORS middleware with configurable origins
+  - Request logging middleware
+  - Portable runtime (works with both Bun and Node.js)
+
+#### Web Application
+
+- SEO enhancements
+  - Comprehensive meta tags (Open Graph, Twitter Cards)
+  - JSON-LD structured data
+  - `robots.txt` allowing all search engines
+  - `sitemap.xml` for search engine indexing
+- API documentation section in landing page
+  - REST API endpoints table
+  - Color-coded HTTP method badges
+
+#### Infrastructure
+
+- Docker entrypoint script for service selection
+- API container with health checks
+
+### Changed
+
+- Package exports updated to match tsup output (`index.js`/`index.cjs`)
+- Coverage configuration excludes apps (mockups/demos)
+- API build uses tsup for cross-platform CI compatibility
+
+### Fixed
+
+- Package exports pointing to wrong file extensions
+- Test imports for non-existent workspace packages
+- CI coverage threshold failures
+
 ## [0.1.1] - 2024-12-24
 
 ### Added
