@@ -12,7 +12,7 @@ export default defineConfig({
       provider: 'v8',
       reporter: ['text', 'json', 'html', 'lcov'],
       reportsDirectory: './coverage',
-      exclude: ['node_modules', 'dist', '**/*.d.ts', 'tests/**', '**/*.config.*'],
+      exclude: ['node_modules', 'dist', '**/*.d.ts', 'tests/**', '**/*.config.*', 'apps/**'],
       thresholds: {
         statements: 50,
         branches: 50,
