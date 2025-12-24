@@ -18,7 +18,7 @@ Project management lives in `.scrum/` (backlog with 47 items totaling 299 story 
 
 ## Coding Style & Naming Conventions
 
-TypeScript strict mode is mandatory; avoid `any` and prefer explicit return types for exported APIs. Source files use two-space indentation, single quotes, and trailing commas—let Prettier handle formatting and lint-staged will enforce it on commit. React components, classes, and types follow PascalCase, hooks/utilities use camelCase, while folders/files stay kebab-case (`packages/shared/src/http-client.ts`). Keep imports sorted via Prettier’s organize-imports plugin, colocate CSS with React components, and surface environment-dependent constants through `packages/config` rather than inline literals.
+TypeScript strict mode is mandatory; avoid `any` and prefer explicit return types for exported APIs. Source files use two-space indentation, single quotes, and trailing commas—let Prettier handle formatting and lint-staged will enforce it on commit. React components, classes, and types follow PascalCase, hooks/utilities use camelCase, while folders/files stay kebab-case (`packages/shared/src/http-client.ts`). Keep imports sorted via Prettier's organize-imports plugin, colocate CSS with React components, and surface environment-dependent constants through `packages/config` rather than inline literals.
 
 ## Testing Guidelines
 

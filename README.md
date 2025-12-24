@@ -31,6 +31,10 @@
 
 ---
 
+<p align="center">
+  <img src="docs/assets/banner.png" alt="Monorepo Template 2025 Edition" width="600" />
+</p>
+
 ## Overview
 
 A 2025-ready TypeScript monorepo template featuring Turborepo for high-performance builds, pnpm workspaces for efficient dependency management, Codex-aware agent workflows, and comprehensive tooling for professional development teams.
@@ -147,6 +151,9 @@ A 2025-ready TypeScript monorepo template featuring Turborepo for high-performan
 - [AI Code Review](#ai-code-review)
 - [Codex Workflow Support](#codex-workflow-support)
 - [Agentic Workflows](#agentic-workflows)
+- [Scrum Project Management](#scrum-project-management)
+- [Zero-QA Quality Assurance](#zero-qa-quality-assurance)
+- [UI/UX Pro Max Skill](#uiux-pro-max-skill)
 - [Roadmap](#roadmap)
 - [AI Cost Estimation](#ai-cost-estimation)
 - [Documentation](#documentation)
@@ -993,6 +1000,153 @@ This repository carries multiple agent-focused control points so automation and 
 4. Document new behaviors inside `docs/architecture/agent-*.md` and reflect them inside `AGENTS.md` so every automation entry stays current.
 
 These guardrails ensure Codex, Claude, Kiro, and human contributors share the same mental model when shipping new agent packages or workflows.
+
+## Scrum Project Management
+
+Built-in Scrum framework for agile development with Claude Code slash commands.
+
+### Structure
+
+```
+.scrum/
+├── backlog/           # Product backlog items (47 items, 299 story points)
+│   ├── index.md       # Full backlog index with priorities
+│   └── PBI-*.md       # Individual backlog items
+├── sprints/           # Sprint folders with planning/tracking
+├── standups/          # Daily standup notes
+├── retrospectives/    # Sprint retrospective documents
+└── config.json        # Sprint configuration (14-day sprints)
+```
+
+### Commands
+
+| Command          | Purpose                                               |
+| ---------------- | ----------------------------------------------------- |
+| `/scrum-init`    | Initialize Scrum structure                            |
+| `/scrum-backlog` | Manage product backlog (list, add, prioritize, groom) |
+| `/scrum-sprint`  | Start, view, or close sprints                         |
+| `/scrum-standup` | Record daily standup notes                            |
+| `/scrum-retro`   | Create retrospective documents                        |
+| `/scrum-review`  | Conduct sprint reviews                                |
+
+### Quick Start
+
+```bash
+# List all backlog items
+/scrum-backlog list
+
+# Add a new item
+/scrum-backlog add "Implement user authentication"
+
+# Start a sprint
+/scrum-sprint start
+```
+
+## Zero-QA Quality Assurance
+
+Zero-QA practices for quality-first development with automated checks.
+
+### Structure
+
+```
+.zero-qa/
+├── config.json                    # Quality gate configuration
+├── checklists/
+│   ├── code-review.md            # Automated code review checklist
+│   ├── definition-of-done.md     # DoD checklist for features
+│   └── pre-commit.md             # Pre-commit verification steps
+└── reports/                       # Quality reports storage
+```
+
+### Quality Gates
+
+| Gate                     | Threshold |
+| ------------------------ | --------- |
+| Test Coverage            | >= 80%    |
+| Lint Errors              | 0         |
+| Type Errors              | 0         |
+| Security Vulnerabilities | 0         |
+
+### Commands
+
+| Command           | Purpose                       |
+| ----------------- | ----------------------------- |
+| `/zero-qa-init`   | Initialize Zero-QA structure  |
+| `/zero-qa-check`  | Run pre-commit quality checks |
+| `/zero-qa-review` | Automated code review         |
+| `/zero-qa-dod`    | Verify Definition of Done     |
+| `/zero-qa-gate`   | Quality gate validation       |
+| `/zero-qa-test`   | Test management               |
+
+### NPM Scripts
+
+```bash
+# Run all quality checks
+pnpm zero-qa
+
+# Full quality check including E2E
+pnpm zero-qa:full
+```
+
+## UI/UX Pro Max Skill
+
+AI-powered design intelligence for building professional UI/UX.
+
+### Features
+
+- **57 UI Styles** - Glassmorphism, Minimalism, Brutalism, Neumorphism, Bento Grid, etc.
+- **95 Color Palettes** - Industry-specific (SaaS, E-commerce, Healthcare, Fintech)
+- **56 Font Pairings** - Curated typography with Google Fonts imports
+- **24 Chart Types** - Dashboard and analytics recommendations
+- **8 Tech Stacks** - React, Next.js, Vue, Svelte, SwiftUI, React Native, Flutter, Tailwind
+- **98 UX Guidelines** - Best practices, anti-patterns, accessibility rules
+
+### Structure
+
+```
+.claude/skills/ui-ux-pro-max/
+├── SKILL.md           # Skill definition (auto-activates on UI/UX requests)
+├── data/              # Design database (9 CSV files)
+│   ├── styles.csv     # 57 UI styles
+│   ├── colors.csv     # 95 color palettes
+│   ├── typography.csv # 56 font pairings
+│   ├── charts.csv     # 24 chart types
+│   ├── stacks/        # 8 stack guidelines
+│   └── ux-guidelines.csv
+└── scripts/
+    └── search.py      # Search tool
+```
+
+### Commands
+
+| Command             | Purpose                                     |
+| ------------------- | ------------------------------------------- |
+| `/ui-review`        | Review UI components for design consistency |
+| `/ux-audit`         | Conduct UX audit on user flows              |
+| `/color-palette`    | Generate or review color palettes           |
+| `/design-system`    | Create design system tokens                 |
+| `/responsive-check` | Check responsive design                     |
+| `/a11y-check`       | Check accessibility (WCAG 2.1 AA)           |
+
+### Usage
+
+The skill auto-activates on UI/UX requests. Just ask naturally:
+
+```
+Build a landing page for my SaaS product
+Create a dashboard for healthcare analytics
+Design a portfolio website with dark mode
+```
+
+Or search the database directly:
+
+```bash
+# Search for SaaS style recommendations
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "saas" --domain style
+
+# Search color palettes for e-commerce
+python3 .claude/skills/ui-ux-pro-max/scripts/search.py "ecommerce" --domain color
+```
 
 ## Roadmap
 

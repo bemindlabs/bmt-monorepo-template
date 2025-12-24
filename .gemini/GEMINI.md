@@ -25,6 +25,9 @@ This is a production-ready TypeScript monorepo template using Turborepo and pnpm
 - `infra/`: Infrastructure configurations (Docker, Kubernetes, Firebase).
 - `docs/`: Documentation.
 - `.agent/workflows/`: Antigravity agentic workflows (e.g., scaffolding, release).
+- `.scrum/`: Scrum project management (backlog, sprints, standups, retrospectives).
+- `.zero-qa/`: Quality assurance configuration (quality gates, checklists, reports).
+- `.claude/skills/`: AI skills (UI/UX Pro Max design intelligence).
 
 ## Building and Running
 
@@ -76,3 +79,35 @@ Ensure `node` (v22+) and `pnpm` (v9+) are installed.
 ## Agentic Workflows
 
 This project contains "Antigravity" workflows in `.agent/workflows/` for automating tasks like scaffolding agents and releasing packages.
+
+## Scrum Project Management
+
+The `.scrum/` directory contains Scrum artifacts:
+
+- **Backlog:** 47 product backlog items (299 story points) in `.scrum/backlog/`
+- **Sprints:** Sprint planning and tracking in `.scrum/sprints/`
+- **Standups:** Daily standup notes in `.scrum/standups/`
+- **Retrospectives:** Sprint retrospectives in `.scrum/retrospectives/`
+
+Configuration in `.scrum/config.json` (14-day sprints).
+
+## Zero-QA Quality Assurance
+
+The `.zero-qa/` directory enforces quality gates:
+
+- **Test Coverage:** >= 80%
+- **Lint Errors:** 0
+- **Type Errors:** 0
+- **Security Vulnerabilities:** 0
+
+Scripts: `pnpm zero-qa` (lint + type-check + test), `pnpm zero-qa:full` (includes E2E).
+
+## UI/UX Pro Max Skill
+
+AI-powered design intelligence in `.claude/skills/ui-ux-pro-max/`:
+
+- 57 UI styles, 95 color palettes, 56 font pairings
+- 24 chart types, 8 tech stack guidelines, 98 UX best practices
+- Auto-activates on UI/UX requests via Claude Code
+
+Search: `python3 .claude/skills/ui-ux-pro-max/scripts/search.py "<keyword>" --domain <style|color|typography|ux>`
