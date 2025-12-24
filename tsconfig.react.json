@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "display": "React/Next.js",
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "jsx": "preserve",
+    "allowJs": true,
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "@/*": ["./src/*"]
+    }
+  }
+}

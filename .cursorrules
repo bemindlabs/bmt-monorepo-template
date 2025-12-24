@@ -1,0 +1,306 @@
+# Cursor Rules for Monorepo Template
+
+## Project Overview
+This is a TypeScript monorepo using Turborepo, pnpm workspaces, and modern tooling. The project follows strict TypeScript conventions, uses conventional commits, and maintains high code quality standards.
+
+## Project Structure
+
+### Monorepo Architecture
+- **Root**: Contains shared configuration (tsconfig, eslint, prettier, turbo)
+- **apps/**: Applications (web apps, APIs, etc.)
+  - `apps/web/`: Vite + React 19 application
+- **packages/**: Shared packages with workspace dependencies
+  - `packages/shared/`: Common types, utilities, errors, constants
+  - `packages/config/`: Environment and configuration utilities
+  - `packages/core/`: Core framework utilities
+- **infra/**: Infrastructure configurations (Docker, Kubernetes, Firebase)
+- **tests/**: Test suites (unit, integration, e2e)
+- **docs/**: Documentation and architecture guides
+
+### Package Naming Convention
+- All packages use the `@monorepo/*` namespace
+- Package names: `@monorepo/shared`, `@monorepo/config`, `@monorepo/core`
+- App names: `@monorepo/web`
+
+## TypeScript Guidelines
+
+### Strict Mode
+- Always use TypeScript strict mode (enabled in tsconfig.base.json)
+- No `any` types - use proper types or `unknown` with type guards
+- Enable `noImplicitAny`, `strictNullChecks`, `noUnusedLocals`, `noUnusedParameters`
+- Use explicit return types for exported functions
+
+### Type Safety
+```typescript
+// ✅ Good
+function processData(input: string): Result {
+  // implementation
+}
+
+// ❌ Bad
+function processData(input: any): any {
+  // implementation
+}
+```
+
+### Package Exports
+- All packages use dual exports (ESM + CommonJS) via tsup
+- Export structure: `dist/index.js` (CJS), `dist/index.mjs` (ESM), `dist/index.d.ts` (types)
+- Use `workspace:*` for internal dependencies
+
+## Code Style
+
+### ESLint Rules
+- Follow ESLint 9 configuration in `eslint.config.mjs`
+- No unused variables (use `_` prefix for intentionally unused)
+- No `any` types allowed
+- Prefer `const` over `let`, never use `var`
+- Console.log is discouraged (use `console.warn` or `console.error` if needed)
+
+### Prettier
+- Auto-format on save
+- Organize imports automatically
+- Format JSON, Markdown, YAML files
+
+### Import Organization
+- Group imports: external → internal packages → relative
+- Use path aliases where configured (`@/` for `src/` in apps)
+
+## Build System
+
+### Turborepo
+- Use `turbo` for all build commands
+- Tasks are defined in `turbo.json`
+- Build dependencies: packages must build before apps that depend on them
+- Use `--filter` to target specific packages/apps
+
+### Build Commands
+```bash
+# Build all packages
+pnpm build:packages
+
+# Build specific package
+pnpm build --filter=@monorepo/core
+
+# Development mode (watch)
+pnpm dev --filter=@monorepo/web
+```
+
+### tsup Configuration
+- All packages use tsup for bundling
+- Generate both ESM and CommonJS outputs
+- Include source maps and type declarations
+
+## Testing
+
+### Vitest
+- Use Vitest for all testing (unit, integration, e2e)
+- Test files: `*.spec.ts` or `*.test.ts`
+- Place tests in `tests/` directory or co-located with source
+- Use `describe`, `it`, `expect` from Vitest
+
+### Test Structure
+```typescript
+import { describe, it, expect } from 'vitest';
+
+describe('FeatureName', () => {
+  it('should do something', () => {
+    expect(actual).toBe(expected);
+  });
+});
+```
+
+## Package Development
+
+### Creating New Packages
+1. Create directory: `packages/my-package/`
+2. Add `package.json` with `@monorepo/my-package` name
+3. Extend `tsconfig.base.json` in `tsconfig.json`
+4. Use tsup for building
+5. Add workspace dependencies: `"@monorepo/shared": "workspace:*"`
+
+### Creating New Apps
+1. Create directory: `apps/my-app/`
+2. Add `package.json` with `@monorepo/my-app` name
+3. Configure build tool (Vite, tsup, etc.)
+4. Add workspace dependencies as needed
+
+## Git Workflow
+
+### Commit Convention
+Follow [Conventional Commits](https://www.conventionalcommits.org/):
+- `feat:` - New feature
+- `fix:` - Bug fix
+- `docs:` - Documentation changes
+- `chore:` - Maintenance tasks
+- `test:` - Test additions/changes
+- `refactor:` - Code refactoring
+- `style:` - Code style changes (formatting)
+- `perf:` - Performance improvements
+
+### Pre-commit Hooks
+- Husky runs lint-staged
+- Auto-fix ESLint issues
+- Auto-format with Prettier
+- Commitlint validates commit messages
+
+## Environment Variables
+
+### Configuration
+- Use `@monorepo/config` package for environment management
+- Validate with Zod schemas
+- Use `.env.example` or `.env.template` for documentation
+- Never commit `.env` or `.env.local` files
+
+### Environment Helpers
+```typescript
+import { loadEnv, isDev, isProd, isTest } from '@monorepo/config';
+
+const config = loadEnv();
+if (isDev()) {
+  // development code
+}
+```
+
+## Port Management
+
+### Reserved Ports
+- **3000-3099**: Application ports
+  - 3000: Web App (Production)
+  - 3001: Web App (Preview)
+  - 3010-3019: API Services
+  - 3020-3029: WebSocket Services
+- **5173+**: Vite development servers
+- **4000+**: Infrastructure services (Firebase, etc.)
+
+## Code Generation
+
+### When Creating Code
+1. Always use TypeScript with strict types
+2. Export types and interfaces from packages
+3. Add JSDoc comments for public APIs
+4. Follow the existing code style
+5. Ensure tests are included for new features
+6. Update documentation if needed
+
+### File Naming
+- Use kebab-case for files: `my-utility.ts`
+- Use PascalCase for React components: `MyComponent.tsx`
+- Use camelCase for functions and variables
+
+## Dependencies
+
+### Package Manager
+- Use `pnpm` exclusively (enforced by preinstall hook)
+- Version: pnpm >= 9.0.0
+- Node.js: >= 22.0.0
+
+### Adding Dependencies
+```bash
+# Add to root (dev dependency)
+pnpm add -Dw <package>
+
+# Add to specific package
+pnpm add <package> --filter=@monorepo/core
+
+# Add workspace dependency
+# Edit package.json: "@monorepo/shared": "workspace:*"
+```
+
+## Infrastructure
+
+### Docker
+- Development: `infra/docker/docker-compose.yml`
+- Production: `infra/docker/Dockerfile`
+- Use multi-stage builds for production
+
+### Kubernetes
+- Base configs: `infra/k8s/base/`
+- Environment overlays: `infra/k8s/overlays/{development,staging,production}`
+- Use Kustomize for configuration management
+
+## AI Assistant Guidelines
+
+### When Making Changes
+1. **Understand the monorepo structure** - Know which package/app you're working in
+2. **Respect build dependencies** - Build packages before apps
+3. **Maintain type safety** - Never use `any`, always provide proper types
+4. **Follow existing patterns** - Match the code style and structure
+5. **Update tests** - Add or update tests for new features
+6. **Check workspace dependencies** - Ensure proper `workspace:*` references
+7. **Run type checks** - Verify TypeScript compiles before suggesting changes
+8. **Consider Turborepo caching** - Structure changes to maximize cache hits
+
+### Common Tasks
+- **Adding a feature**: Create in appropriate package, export from index, add tests
+- **Fixing a bug**: Identify root cause, fix with proper types, add regression test
+- **Refactoring**: Maintain API compatibility, update all usages, run full test suite
+- **Adding a package**: Follow package template, update workspace configs, add to docs
+
+### Code Review Focus
+- Type safety and strict TypeScript usage
+- Proper error handling
+- Test coverage
+- Performance considerations
+- Security best practices
+- Monorepo structure compliance
+
+## Documentation
+
+### When to Update Docs
+- New packages or apps
+- Architecture changes
+- New workflows or processes
+- Breaking changes
+- Infrastructure updates
+
+### Documentation Locations
+- `README.md`: Project overview and quick start
+- `docs/`: Detailed documentation
+- `wiki/`: GitHub wiki pages
+- `CHANGELOG.md`: Version history
+
+## Best Practices
+
+1. **Always build packages before apps** that depend on them
+2. **Use workspace dependencies** (`workspace:*`) for internal packages
+3. **Keep packages focused** - Single responsibility principle
+4. **Export types** - Make types available to consumers
+5. **Write tests** - Maintain high test coverage
+6. **Follow conventions** - Stick to established patterns
+7. **Type everything** - No implicit any, use proper types
+8. **Document public APIs** - Add JSDoc for exported functions
+9. **Keep dependencies minimal** - Only add what's needed
+10. **Respect port assignments** - Use reserved port ranges
+
+## Error Handling
+
+### Error Classes
+- Use error classes from `@monorepo/shared`
+- Create specific error types for different scenarios
+- Include context in error messages
+
+```typescript
+import { CustomError } from '@monorepo/shared';
+
+class ValidationError extends CustomError {
+  constructor(message: string, public field: string) {
+    super(message);
+  }
+}
+```
+
+## Performance
+
+### Build Performance
+- Leverage Turborepo caching
+- Use appropriate task dependencies
+- Minimize build outputs
+- Use tsup for fast builds
+
+### Runtime Performance
+- Avoid unnecessary re-renders in React
+- Use proper memoization
+- Optimize bundle sizes
+- Lazy load when appropriate
+

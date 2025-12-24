@@ -1,0 +1,14 @@
+blank_issues_enabled: true
+contact_links:
+  - name: 📚 Documentation
+    url: https://github.com/your-org/monorepo-agents-workflow/blob/main/docs/DOCUMENTATION_INDEX.md
+    about: Check our comprehensive documentation for guides and references
+  - name: 💬 Discussions
+    url: https://github.com/your-org/monorepo-agents-workflow/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 🔒 Security Issue
+    url: https://github.com/your-org/monorepo-agents-workflow/blob/main/SECURITY.md
+    about: Report security vulnerabilities privately
+  - name: 📧 Contact Support
+    url: https://your-project-url
+    about: Contact BEMIND TECHNOLOGY CO., LTD. for commercial support

@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: monorepo-dev
+
+resources:
+  - ../../base
+
+nameSuffix: -dev
+
+commonLabels:
+  environment: development
+
+patches:
+  - patch: |-
+      - op: replace
+        path: /spec/replicas
+        value: 1
+    target:
+      kind: Deployment
+      name: web
+
+configMapGenerator:
+  - name: app-config
+    behavior: merge
+    literals:
+      - NODE_ENV=development
+      - LOG_LEVEL=debug

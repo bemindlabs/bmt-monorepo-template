@@ -1,0 +1,94 @@
+#!/usr/bin/env sh
+
+echo "Running pre-commit checks..."
+echo ""
+
+# Get list of staged files
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
+
+# Check if there are staged files
+if [ -z "$STAGED_FILES" ]; then
+  echo "No staged files to check"
+  exit 0
+fi
+
+# Check for sensitive files
+echo "Checking for sensitive files..."
+SENSITIVE_FILES=$(echo "$STAGED_FILES" | grep -E '\.(env|env\.local|env\.production|env\.staging|pem|key|p12|crt|pfx|keystore)$' || true)
+
+if [ -n "$SENSITIVE_FILES" ]; then
+  echo "ERROR: Attempting to commit sensitive files:"
+  echo "$SENSITIVE_FILES" | sed 's/^/   /'
+  echo ""
+  echo "Remove these files from staging:"
+  echo "   git reset HEAD <file>"
+  exit 1
+fi
+
+# Check for large files (>5MB)
+echo "Checking for large files..."
+LARGE_FILES=""
+for file in $STAGED_FILES; do
+  if [ -f "$file" ]; then
+    size=$(wc -c < "$file" 2>/dev/null | tr -d ' ' || echo "0")
+    if [ "$size" -gt 5242880 ]; then
+      size_mb=$((size / 1048576))
+      LARGE_FILES="$LARGE_FILES\n   $file (${size_mb}MB)"
+    fi
+  fi
+done
+
+if [ -n "$LARGE_FILES" ]; then
+  echo "WARNING: Large files detected (>5MB):"
+  echo "$LARGE_FILES"
+  echo ""
+  echo "Consider using Git LFS for large files"
+  echo "Press Ctrl+C to abort, or wait 3 seconds to continue..."
+  sleep 3
+fi
+
+# Filter TypeScript/JavaScript files
+TS_FILES=$(echo "$STAGED_FILES" | grep -E '\.(ts|tsx|js|jsx)$' || true)
+
+if [ -z "$TS_FILES" ]; then
+  echo "No TypeScript/JavaScript files to lint"
+else
+  echo "Staged TypeScript/JavaScript files:"
+  echo "$TS_FILES" | sed 's/^/   /'
+  echo ""
+fi
+
+# Run lint-staged for formatting and linting
+echo "Running Prettier and ESLint..."
+pnpm exec lint-staged
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "ERROR: Linting/formatting failed!"
+  echo ""
+  echo "Fix the errors above and try again"
+  echo "Or run: pnpm lint:fix"
+  exit 1
+fi
+
+# Check for debugger statements
+if [ -n "$TS_FILES" ]; then
+  echo ""
+  echo "Checking for debugger statements..."
+  DEBUGGER_FILES=$(echo "$TS_FILES" | xargs grep -l "debugger" 2>/dev/null || true)
+
+  if [ -n "$DEBUGGER_FILES" ]; then
+    echo "ERROR: Found debugger statements in:"
+    echo "$DEBUGGER_FILES" | sed 's/^/   /'
+    echo ""
+    echo "Remove debugger statements before committing"
+    exit 1
+  fi
+fi
+
+# Success
+echo ""
+echo "All pre-commit checks passed!"
+echo ""
+
+exit 0

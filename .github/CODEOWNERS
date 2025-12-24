@@ -1,0 +1,101 @@
+# CODEOWNERS - Code Review Assignments
+#
+# This file defines automatic reviewer assignments for pull requests.
+# Update the team names to match your GitHub organization structure.
+#
+# Format: <pattern> <owner1> <owner2> ...
+# Teams: Use @org/team-name format
+# Users: Use @username format
+#
+# Docs: https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# ============================================================================
+# Default Owners
+# ============================================================================
+
+# All files require review from maintainers by default
+* @your-org/maintainers
+
+# ============================================================================
+# Core Packages
+# ============================================================================
+
+packages/core/** @your-org/core-team
+packages/shared/** @your-org/core-team
+packages/config/** @your-org/core-team
+
+# ============================================================================
+# Agent Implementations
+# ============================================================================
+
+agents/** @your-org/agent-developers
+
+# ============================================================================
+# AI-Generated Test Reviews
+# ============================================================================
+# AI-generated tests should be reviewed by humans before merging
+
+**/*.spec.ts @your-org/reviewers
+**/*.test.ts @your-org/reviewers
+**/*.property.spec.ts @your-org/reviewers
+**/e2e/**/*.ts @your-org/qa-team
+
+# ============================================================================
+# CI/CD & DevOps
+# ============================================================================
+
+.github/workflows/** @your-org/devops
+.github/actions/** @your-org/devops
+Dockerfile* @your-org/devops
+docker-compose*.yml @your-org/devops
+infra/** @your-org/devops
+
+# ============================================================================
+# Claude Code Configuration
+# ============================================================================
+
+.claude/** @your-org/maintainers
+.claude/agents/** @your-org/agent-developers
+
+# ============================================================================
+# Documentation
+# ============================================================================
+
+docs/** @your-org/maintainers
+*.md @your-org/maintainers
+/README.md @your-org/maintainers
+/CONTRIBUTING.md @your-org/maintainers
+/SECURITY.md @your-org/maintainers
+
+# ============================================================================
+# Build & Configuration
+# ============================================================================
+
+package.json @your-org/maintainers
+pnpm-workspace.yaml @your-org/maintainers
+turbo.json @your-org/maintainers
+tsconfig*.json @your-org/maintainers
+eslint.config.mjs @your-org/maintainers
+
+# ============================================================================
+# Security & Secrets
+# ============================================================================
+
+.env.example @your-org/maintainers
+**/seeds/*.ts @your-org/maintainers
+
+# ============================================================================
+# Setup Instructions:
+#
+# 1. Replace @your-org with your GitHub organization name
+# 2. Create the following teams in your organization:
+#    - maintainers: Core maintainers with full access
+#    - core-team: Package developers
+#    - agent-developers: Agent implementation developers
+#    - devops: CI/CD and infrastructure
+#    - reviewers: Code reviewers
+#    - qa-team: Quality assurance
+#
+# 3. Add team members at:
+#    https://github.com/orgs/YOUR-ORG/teams
+# ============================================================================

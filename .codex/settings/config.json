@@ -1,0 +1,38 @@
+{
+  "project": "dev-agents-workflow",
+  "description": "TypeScript monorepo template optimized for agent tooling, pnpm, and Turborepo.",
+  "runtime": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0",
+    "typescript": ">=5.9.0"
+  },
+  "workspace": {
+    "apps": ["apps/web"],
+    "packages": ["packages/core", "packages/shared", "packages/config"],
+    "tests": "tests"
+  },
+  "commands": {
+    "install": "pnpm install",
+    "dev": "pnpm dev",
+    "build": "pnpm build",
+    "buildPackages": "pnpm build:packages",
+    "lint": "pnpm lint",
+    "lintFix": "pnpm lint:fix",
+    "typecheck": "pnpm type-check",
+    "test": "pnpm test",
+    "coverage": "pnpm test:coverage",
+    "dockerUp": "pnpm docker:up",
+    "dockerDown": "pnpm docker:down"
+  },
+  "qualityBar": {
+    "lint": true,
+    "typecheck": true,
+    "tests": ["unit", "integration"],
+    "coverageTarget": 0.8
+  },
+  "notes": [
+    "Add new workspaces to pnpm-workspace.yaml and turbo.json before running builds.",
+    "Use workspace:* versions when linking internal packages.",
+    "Document infra or workflow changes in docs/ and wiki/."
+  ]
+}

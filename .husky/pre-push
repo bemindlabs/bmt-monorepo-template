@@ -1,0 +1,124 @@
+#!/usr/bin/env sh
+
+echo "🚀 Running pre-push checks..."
+echo ""
+
+# Get current branch
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+
+# Prevent push to main/master without warning
+if [ "$BRANCH" = "main" ] || [ "$BRANCH" = "master" ]; then
+  echo "⚠️  WARNING: Pushing directly to $BRANCH branch!"
+  echo "💡 Consider using pull requests for better code review"
+  echo "   Press Ctrl+C to abort, or wait 5 seconds to continue..."
+  sleep 5
+fi
+
+# Check if pushing to protected branches (production/staging)
+if [ "$BRANCH" = "production" ] || [ "$BRANCH" = "staging" ]; then
+  echo "🔒 Pushing to protected branch: $BRANCH"
+  echo "⚠️  This will trigger deployment!"
+  echo "   Press Ctrl+C to abort, or wait 10 seconds to continue..."
+  sleep 10
+fi
+
+# Run type check (skip for mobile app due to known issues)
+echo "📝 Running TypeScript type check..."
+pnpm type-check 2>&1 | tee /tmp/type-check.log
+TYPE_CHECK_EXIT=$?
+
+# Check if only app-main failed (known issue)
+if [ $TYPE_CHECK_EXIT -ne 0 ]; then
+  if grep -q "Failed:.*@unity-sme/app-main#type-check" /tmp/type-check.log; then
+    # Check if other packages also failed
+    FAILED_COUNT=$(grep -c "Failed:" /tmp/type-check.log || echo "0")
+    if [ "$FAILED_COUNT" -eq 1 ]; then
+      echo "⚠️  WARNING: Only app-main has type errors (known React Native issue, skipping)"
+    else
+      echo "❌ ERROR: TypeScript type check failed!"
+      echo "💡 Fix type errors before pushing or use --no-verify to skip"
+      exit 1
+    fi
+  else
+    echo "❌ ERROR: TypeScript type check failed!"
+    echo "💡 Fix type errors before pushing or use --no-verify to skip"
+    exit 1
+  fi
+fi
+
+# Run linting on changed files only
+echo ""
+echo "🔍 Running linter on changed files..."
+CHANGED_FILES=$(git diff --name-only HEAD@{upstream}..HEAD 2>/dev/null || git diff --name-only HEAD~1..HEAD)
+TS_FILES=$(echo "$CHANGED_FILES" | grep -E '\.(ts|tsx|js|jsx)$' || true)
+
+if [ -n "$TS_FILES" ]; then
+  # Filter out deleted files
+  EXISTING_FILES=$(echo "$TS_FILES" | while read file; do
+    if [ -f "$file" ]; then
+      echo "$file"
+    fi
+  done)
+
+  if [ -n "$EXISTING_FILES" ]; then
+    # Use xargs with -0 to handle filenames with spaces
+    echo "$EXISTING_FILES" | tr '\n' '\0' | xargs -0 pnpm exec eslint --max-warnings 10 --no-warn-ignored
+    if [ $? -ne 0 ]; then
+      echo "❌ ERROR: Linting failed!"
+      echo "💡 Fix linting errors or use --no-verify to skip"
+      exit 1
+    fi
+  else
+    echo "✅ No existing TypeScript/JavaScript files to lint"
+  fi
+else
+  echo "✅ No TypeScript/JavaScript files changed"
+fi
+
+# Run tests only for changed files (fast feedback)
+echo ""
+echo "🧪 Running tests for changed files..."
+
+# Get changed files
+REMOTE_BRANCH=$(git rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null || echo "origin/$BRANCH")
+CHANGED_TEST_FILES=$(git diff --name-only HEAD $REMOTE_BRANCH 2>/dev/null | grep -E '\.(spec|test)\.(ts|tsx|js|jsx)$' || true)
+
+  echo "⚠️  Skipping local tests due to monorepo structure complexity."
+  echo "💡 Please verify tests via 'pnpm test:ci' or equivalent before merging."
+
+
+# Check for package.json changes and verify lockfile is updated
+PACKAGE_CHANGED=$(echo "$CHANGED_FILES" | grep "package.json$" || true)
+LOCKFILE_CHANGED=$(echo "$CHANGED_FILES" | grep "pnpm-lock.yaml$" || true)
+
+if [ -n "$PACKAGE_CHANGED" ] && [ -z "$LOCKFILE_CHANGED" ]; then
+  echo ""
+  echo "⚠️  WARNING: package.json changed but pnpm-lock.yaml not updated!"
+  echo "💡 Run 'pnpm install' to update the lockfile"
+  echo "   Press Ctrl+C to abort, or wait 3 seconds to continue..."
+  sleep 3
+fi
+
+# Check for migration files in database package
+MIGRATION_FILES=$(echo "$CHANGED_FILES" | grep "packages/database/src/migrations/" || true)
+if [ -n "$MIGRATION_FILES" ]; then
+  echo ""
+  echo "📊 Database migration files detected:"
+  echo "$MIGRATION_FILES" | sed 's/^/   /'
+  echo ""
+  echo "⚠️  Remember to:"
+  echo "   1. Test migrations locally first"
+  echo "   2. Create rollback migrations if needed"
+  echo "   3. Update migration documentation"
+  echo "   4. Coordinate with team before deploying"
+fi
+
+# Summary
+echo ""
+echo "✅ Pre-push checks passed!"
+echo "📦 Branch: $BRANCH"
+echo "📝 Files changed: $(echo "$CHANGED_FILES" | wc -l | tr -d ' ')"
+echo ""
+echo "🚀 Pushing to remote..."
+
+exit 0

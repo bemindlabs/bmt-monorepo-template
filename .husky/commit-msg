@@ -1,0 +1,36 @@
+#!/usr/bin/env sh
+
+echo "Validating commit message..."
+
+# Use commitlint for validation
+pnpm exec commitlint --edit "$1"
+
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "Commit message validation failed!"
+  echo ""
+  echo "Commit message must follow Conventional Commits:"
+  echo "   type(scope): subject"
+  echo ""
+  echo "   Types: feat, fix, docs, style, refactor, test, chore, perf, ci, build, revert"
+  echo "   Scope: optional, lowercase with hyphens"
+  echo ""
+  echo "   Common scopes for Monorepo Agents Workflow:"
+  echo "   - Packages: core, shared, config"
+  echo "   - Agents: agent-planner, agent-executor, agent-reviewer"
+  echo "   - Tools: cli, mcp"
+  echo "   - Infrastructure: docker, ci, scripts"
+  echo "   - Documentation: docs, readme"
+  echo ""
+  echo "   Examples:"
+  echo "   feat(core): add retry mechanism to agent executor"
+  echo "   fix(shared): correct token counting for unicode"
+  echo "   docs(readme): update installation instructions"
+  echo "   chore(deps): update dependencies"
+  echo "   test(core): add agent execution tests"
+  echo ""
+  exit 1
+fi
+
+echo "Commit message format valid"
+exit 0

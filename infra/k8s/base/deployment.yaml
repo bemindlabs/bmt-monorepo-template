@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: web
+  namespace: monorepo
+  labels:
+    app.kubernetes.io/name: web
+    app.kubernetes.io/component: frontend
+    app.kubernetes.io/part-of: monorepo-template
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: web
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: web
+        app.kubernetes.io/component: frontend
+    spec:
+      containers:
+        - name: web
+          image: monorepo/web:latest
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 3000
+              name: http
+          envFrom:
+            - configMapRef:
+                name: app-config
+            - secretRef:
+                name: app-secrets
+          resources:
+            requests:
+              memory: '128Mi'
+              cpu: '100m'
+            limits:
+              memory: '512Mi'
+              cpu: '500m'
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: 3000
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+      restartPolicy: Always

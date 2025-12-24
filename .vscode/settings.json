@@ -1,0 +1,47 @@
+{
+  "editor.formatOnSave": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": "explicit"
+  },
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": true,
+    "**/.turbo": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/coverage": true
+  },
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/.turbo": true,
+    "**/.next": true,
+    "**/dist": true,
+    "**/coverage": true,
+    "**/pnpm-lock.yaml": true
+  },
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "cSpell.words": [
+    "anthropic",
+    "clsx",
+    "gemini",
+    "lucide",
+    "monorepo",
+    "nestjs",
+    "nextjs",
+    "ollama",
+    "openai",
+    "pnpm",
+    "shadcn",
+    "tailwindcss",
+    "tanstack",
+    "tsup",
+    "turborepo",
+    "typeorm",
+    "vitest",
+    "zod",
+    "zustand"
+  ]
+}

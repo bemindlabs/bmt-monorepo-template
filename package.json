@@ -1,0 +1,86 @@
+{
+  "name": "monorepo-template",
+  "version": "0.1.0",
+  "private": true,
+  "description": "TypeScript Monorepo Template with Turborepo",
+  "author": {
+    "name": "BEMIND TECHNOLOGY CO., LTD.",
+    "email": "info@bemind.tech",
+    "url": "https://www.bemind.tech/"
+  },
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/monorepo-template.git"
+  },
+  "homepage": "https://github.com/your-org/monorepo-template#readme",
+  "bugs": {
+    "url": "https://github.com/your-org/monorepo-template/issues"
+  },
+  "keywords": [
+    "monorepo",
+    "typescript",
+    "turborepo",
+    "template",
+    "pnpm",
+    "workspaces"
+  ],
+  "packageManager": "pnpm@9.15.2",
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "prepare": "husky",
+    "dev": "turbo dev",
+    "build": "turbo build",
+    "build:packages": "turbo build --filter='./packages/*'",
+    "lint": "turbo lint",
+    "lint:fix": "turbo lint:fix",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "type-check": "turbo type-check",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
+    "test:unit": "vitest run tests/unit",
+    "test:integration": "vitest run tests/integration",
+    "test:e2e": "vitest run tests/e2e",
+    "clean": "turbo clean && rimraf node_modules",
+    "docker:up": "docker-compose -f infra/docker/docker-compose.yml up -d",
+    "docker:down": "docker-compose -f infra/docker/docker-compose.yml down",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "turbo build --filter='./packages/*' && changeset publish"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.29.8",
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.39.2",
+    "@types/node": "^22.19.3",
+    "@vitest/coverage-v8": "^3.2.4",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^9.1.2",
+    "husky": "^9.1.7",
+    "lint-staged": "^15.5.2",
+    "prettier": "^3.7.4",
+    "prettier-plugin-organize-imports": "^4.3.0",
+    "prettier-plugin-tailwindcss": "^0.6.14",
+    "rimraf": "^6.1.2",
+    "turbo": "^2.7.2",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.50.1",
+    "vitest": "^3.2.4"
+  },
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  }
+}

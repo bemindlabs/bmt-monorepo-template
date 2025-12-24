@@ -1,0 +1,160 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: '[Feature]: '
+labels: ['enhancement', 'needs-triage']
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thank you for suggesting a feature! Please fill out the form below to help us understand your request.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem Statement
+      description: What problem are you trying to solve? Is your feature request related to a problem?
+      placeholder: I'm always frustrated when...
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution
+      description: Describe your proposed solution
+      placeholder: I would like to see...
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternative Solutions
+      description: Have you considered any alternative solutions or workarounds?
+      placeholder: Alternatives I've considered...
+
+  - type: dropdown
+    id: component
+    attributes:
+      label: Component
+      description: Which component or service would this feature affect?
+      options:
+        - 'API Gateway'
+        - 'Web Portal'
+        - 'Web Admin'
+        - 'Web POS'
+        - 'Web Franchise'
+        - 'Web CRM'
+        - 'Web HR'
+        - 'Web Project'
+        - 'Web Support'
+        - 'Web Tools'
+        - 'Web Analytics'
+        - 'Web Loyalty'
+        - 'Web Website Builder'
+        - 'Web Landing'
+        - 'Web Omni Portal'
+        - 'Mobile App'
+        - 'Desktop POS'
+        - 'service-core'
+        - 'service-inventory'
+        - 'service-accounting'
+        - 'service-ai'
+        - 'service-hr'
+        - 'service-crm'
+        - 'service-payment'
+        - 'service-notification'
+        - 'service-logistics'
+        - 'service-procurement'
+        - 'service-production'
+        - 'service-bi'
+        - 'service-marketing'
+        - 'service-integration'
+        - 'service-documents'
+        - 'service-project'
+        - 'service-website'
+        - 'service-loyalty'
+        - 'service-workflow'
+        - 'Shared Package'
+        - 'Infrastructure'
+        - 'Documentation'
+        - 'Cross-cutting'
+        - 'Other'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: priority
+    attributes:
+      label: Priority
+      description: How important is this feature to you?
+      options:
+        - 'Critical - Blocking my work'
+        - 'High - Very important to my workflow'
+        - 'Medium - Would be nice to have'
+        - 'Low - Just a suggestion'
+    validations:
+      required: true
+
+  - type: dropdown
+    id: impact
+    attributes:
+      label: Impact
+      description: Who would benefit from this feature?
+      options:
+        - 'All users'
+        - 'Most users'
+        - 'Some users'
+        - 'Power users'
+        - 'Developers'
+        - 'Administrators'
+        - 'Specific user group'
+    validations:
+      required: true
+
+  - type: textarea
+    id: use-cases
+    attributes:
+      label: Use Cases
+      description: Describe specific use cases for this feature
+      placeholder: |
+        1. As a [role], I want to [action] so that [benefit]
+        2. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: mockups
+    attributes:
+      label: Mockups / Design Ideas
+      description: If applicable, add mockups, wireframes, or design ideas
+      placeholder: Drag and drop images here or paste image URLs...
+
+  - type: textarea
+    id: technical-notes
+    attributes:
+      label: Technical Notes
+      description: Any technical considerations or implementation ideas
+      placeholder: Technical implementation notes...
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional Context
+      description: Any other context, screenshots, or examples
+      placeholder: Add any other context here...
+
+  - type: checkboxes
+    id: terms
+    attributes:
+      label: Checklist
+      description: Please confirm the following
+      options:
+        - label: I have searched existing issues to avoid duplicates
+          required: true
+        - label: I have checked the [ROADMAP.md](https://github.com/your-org/monorepo-agents-workflow/blob/main/docs/project/ROADMAP.md) to see if this is already planned
+          required: true
+        - label: I have read the [CONTRIBUTING.md](https://github.com/your-org/monorepo-agents-workflow/blob/main/CONTRIBUTING.md)
+          required: true
+        - label: I am willing to submit a PR to implement this feature (optional)
+          required: false

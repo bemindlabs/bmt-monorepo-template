@@ -1,0 +1,21 @@
+{
+  "recommendations": [
+    "esbenp.prettier-vscode",
+    "dbaeumer.vscode-eslint",
+    "bradlc.vscode-tailwindcss",
+    "ms-vscode.vscode-typescript-next",
+    "editorconfig.editorconfig",
+    "christian-kohler.path-intellisense",
+    "streetsidesoftware.code-spell-checker",
+    "vercel.turbo-vsc",
+    "dsznajder.es7-react-js-snippets",
+    "firsttris.vscode-jest-runner",
+    "humao.rest-client",
+    "ms-azuretools.vscode-docker",
+    "mongodb.mongodb-vscode",
+    "redhat.vscode-yaml",
+    "yoavbls.pretty-ts-errors",
+    "naumovs.color-highlight",
+    "alefragnani.project-manager"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "name": "@monorepo/core",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Core framework and utilities",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "@vitest/coverage-v8": "^2.1.8",
+    "tsup": "^8.3.5",
+    "vitest": "^2.1.8"
+  }
+}

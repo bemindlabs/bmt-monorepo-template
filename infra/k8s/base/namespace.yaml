@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: monorepo
+  labels:
+    app.kubernetes.io/name: monorepo
+    app.kubernetes.io/part-of: monorepo-template

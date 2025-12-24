@@ -1,0 +1,190 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+  packages: write
+
+env:
+  NODE_VERSION: '22'
+  PNPM_VERSION: '9'
+
+jobs:
+  # Build and test before release
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Type check
+        run: pnpm type-check
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Test
+        run: pnpm test
+
+      - name: Build all
+        run: pnpm build
+
+  # Create GitHub Release
+  release:
+    runs-on: ubuntu-latest
+    needs: build
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Get pnpm store directory
+        shell: bash
+        run: echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
+
+      - name: Setup pnpm cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ env.STORE_PATH }}
+          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('**/pnpm-lock.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-pnpm-store-
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build all
+        run: pnpm build
+
+      - name: Get version from tag
+        id: version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Generate changelog
+        id: changelog
+        run: |
+          # Get previous tag
+          PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+
+          if [ -z "$PREVIOUS_TAG" ]; then
+            # First release - get all commits
+            CHANGELOG=$(git log --pretty=format:"- %s (%h)" --no-merges)
+          else
+            # Get commits since previous tag
+            CHANGELOG=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s (%h)" --no-merges)
+          fi
+
+          # Save to file for multiline output
+          echo "$CHANGELOG" > changelog.txt
+          echo "Generated changelog with $(echo "$CHANGELOG" | wc -l) commits"
+
+      - name: Create source archives
+        run: |
+          VERSION=${{ steps.version.outputs.VERSION }}
+
+          # Create clean source archive (excluding node_modules, dist, etc.)
+          git archive --format=tar.gz --prefix=monorepo-template-${VERSION}/ -o monorepo-template-${VERSION}.tar.gz HEAD
+          git archive --format=zip --prefix=monorepo-template-${VERSION}/ -o monorepo-template-${VERSION}.zip HEAD
+
+          # Create checksums
+          sha256sum monorepo-template-${VERSION}.tar.gz > monorepo-template-${VERSION}.tar.gz.sha256
+          sha256sum monorepo-template-${VERSION}.zip > monorepo-template-${VERSION}.zip.sha256
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: v${{ steps.version.outputs.VERSION }}
+          body_path: changelog.txt
+          draft: false
+          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'rc') }}
+          files: |
+            monorepo-template-${{ steps.version.outputs.VERSION }}.tar.gz
+            monorepo-template-${{ steps.version.outputs.VERSION }}.tar.gz.sha256
+            monorepo-template-${{ steps.version.outputs.VERSION }}.zip
+            monorepo-template-${{ steps.version.outputs.VERSION }}.zip.sha256
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # Optional: Publish to npm (if packages are public)
+  publish:
+    runs-on: ubuntu-latest
+    needs: release
+    if: ${{ !contains(github.ref, 'alpha') && !contains(github.ref, 'beta') && !contains(github.ref, 'rc') }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          registry-url: 'https://registry.npmjs.org'
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      # Uncomment to enable npm publishing
+      # - name: Publish to npm
+      #   run: pnpm publish -r --access public --no-git-checks
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Skip npm publish (packages are private)
+        run: echo "Skipping npm publish - packages are marked as private"

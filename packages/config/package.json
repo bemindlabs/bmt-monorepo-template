@@ -1,0 +1,34 @@
+{
+  "name": "@monorepo/config",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Configuration and environment utilities",
+  "type": "module",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "lint": "eslint src/",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.7",
+    "zod": "^3.24.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "vitest": "^2.1.8"
+  }
+}

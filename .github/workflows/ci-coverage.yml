@@ -1,0 +1,69 @@
+name: Coverage Report
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'apps/**/*.ts'
+      - 'apps/**/*.tsx'
+      - 'packages/**/*.ts'
+      - 'packages/**/*.tsx'
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  coverage:
+    name: Generate Coverage Report
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build packages
+        run: pnpm build:packages
+
+      - name: Run tests with coverage
+        run: pnpm test:coverage
+
+      - name: Upload coverage artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-${{ github.run_id }}
+          path: coverage/
+          retention-days: 30
+
+      - name: Post summary
+        run: |
+          echo "## Coverage Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          if [ -f "coverage/coverage-summary.json" ]; then
+            LINES=$(cat coverage/coverage-summary.json | jq '.total.lines.pct // 0')
+            STATEMENTS=$(cat coverage/coverage-summary.json | jq '.total.statements.pct // 0')
+            FUNCTIONS=$(cat coverage/coverage-summary.json | jq '.total.functions.pct // 0')
+            BRANCHES=$(cat coverage/coverage-summary.json | jq '.total.branches.pct // 0')
+            echo "| Metric | Coverage |" >> $GITHUB_STEP_SUMMARY
+            echo "|--------|----------|" >> $GITHUB_STEP_SUMMARY
+            echo "| Lines | ${LINES}% |" >> $GITHUB_STEP_SUMMARY
+            echo "| Statements | ${STATEMENTS}% |" >> $GITHUB_STEP_SUMMARY
+            echo "| Functions | ${FUNCTIONS}% |" >> $GITHUB_STEP_SUMMARY
+            echo "| Branches | ${BRANCHES}% |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "No coverage data found" >> $GITHUB_STEP_SUMMARY
+          fi
