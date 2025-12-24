@@ -3,14 +3,14 @@ import './App.css';
 const VERSION = '0.1.1';
 
 const features = [
-  { icon: '🚀', title: 'Turborepo', desc: 'High-performance build system' },
-  { icon: '📦', title: 'pnpm 9+', desc: 'Fast, disk space efficient' },
-  { icon: '⚡', title: 'Vite 6', desc: 'Next generation frontend tooling' },
-  { icon: '⚛️', title: 'React 19', desc: 'Latest React with TypeScript' },
-  { icon: '🤖', title: 'AI Agents', desc: 'Multi-provider AI support' },
-  { icon: '🐳', title: 'Docker', desc: 'Containerized development' },
-  { icon: '☸️', title: 'Kubernetes', desc: 'Production-ready K8s configs' },
-  { icon: '🔥', title: 'Firebase', desc: 'Hosting & Firestore ready' },
+  { icon: '🚀', iconLabel: 'Rocket', title: 'Turborepo', desc: 'High-performance build system' },
+  { icon: '📦', iconLabel: 'Package', title: 'pnpm 9+', desc: 'Fast, disk space efficient' },
+  { icon: '⚡', iconLabel: 'Lightning', title: 'Vite 6', desc: 'Next generation frontend tooling' },
+  { icon: '⚛️', iconLabel: 'Atom', title: 'React 19', desc: 'Latest React with TypeScript' },
+  { icon: '🤖', iconLabel: 'Robot', title: 'AI Agents', desc: 'Multi-provider AI support' },
+  { icon: '🐳', iconLabel: 'Whale', title: 'Docker', desc: 'Containerized development' },
+  { icon: '☸️', iconLabel: 'Helm', title: 'Kubernetes', desc: 'Production-ready K8s configs' },
+  { icon: '🔥', iconLabel: 'Fire', title: 'Firebase', desc: 'Hosting & Firestore ready' },
 ];
 
 const techStack = [
@@ -26,10 +26,12 @@ const techStack = [
 
 function App() {
   return (
-    <div className="app">
+    <main className="app">
       <header className="header">
         <div className="logo-container">
-          <span className="logo-icon">📦</span>
+          <span className="logo-icon" role="img" aria-label="Package">
+            📦
+          </span>
           <h1>BMT Monorepo Template</h1>
         </div>
         <p className="tagline">
@@ -42,11 +44,13 @@ function App() {
         <h2>Features</h2>
         <div className="feature-grid">
           {features.map((feature) => (
-            <div key={feature.title} className="feature-card">
-              <span className="feature-icon">{feature.icon}</span>
+            <article key={feature.title} className="feature-card">
+              <span className="feature-icon" role="img" aria-label={feature.iconLabel}>
+                {feature.icon}
+              </span>
               <h3>{feature.title}</h3>
               <p>{feature.desc}</p>
-            </div>
+            </article>
           ))}
         </div>
       </section>
@@ -95,6 +99,7 @@ function App() {
           target="_blank"
           rel="noreferrer"
           className="link-button primary"
+          aria-label="View GitHub Repository (opens in new tab)"
         >
           GitHub Repository
         </a>
@@ -103,6 +108,7 @@ function App() {
           target="_blank"
           rel="noreferrer"
           className="link-button"
+          aria-label="View Documentation (opens in new tab)"
         >
           Documentation
         </a>
@@ -111,13 +117,18 @@ function App() {
       <footer className="footer">
         <p>
           Developed by{' '}
-          <a href="https://www.bemind.tech/" target="_blank" rel="noreferrer">
+          <a
+            href="https://www.bemind.tech/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="Visit BEMIND TECHNOLOGY website (opens in new tab)"
+          >
             BEMIND TECHNOLOGY CO., LTD.
           </a>
         </p>
         <p className="copyright">MIT License</p>
       </footer>
-    </div>
+    </main>
   );
 }
 

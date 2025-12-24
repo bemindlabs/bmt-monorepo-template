@@ -24,6 +24,12 @@ docker-logs: ## View Docker container logs
 docker-logs-web: ## View web container logs
 	$(DOCKER_COMPOSE) logs -f web
 
+docker-logs-api: ## View API container logs
+	$(DOCKER_COMPOSE) logs -f api
+
+docker-shell-api: ## Open shell in API container
+	$(DOCKER_COMPOSE) exec api sh
+
 docker-ps: ## Show running Docker containers
 	$(DOCKER_COMPOSE) ps
 

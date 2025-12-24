@@ -1,0 +1,22 @@
+{
+  "name": "@monorepo/api",
+  "version": "0.1.1",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "bun run --watch src/index.ts",
+    "start": "bun run src/index.ts",
+    "build": "bun build src/index.ts --outdir=dist --target=bun",
+    "type-check": "tsc --noEmit",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@monorepo/config": "workspace:*",
+    "@monorepo/core": "workspace:*",
+    "@monorepo/shared": "workspace:*"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.2.14",
+    "typescript": "^5.9.0-beta"
+  }
+}

@@ -9,13 +9,15 @@
   <p align="center">
     A production-ready 2025 TypeScript monorepo template with Turborepo
     <br />
+    <a href="https://bemindlabs.github.io/bmt-monorepo-template/"><strong>🌐 Live Demo</strong></a>
+    ·
     <a href="#get-started"><strong>Get Started</strong></a>
     ·
     <a href="#documentation"><strong>Docs</strong></a>
     ·
-    <a href="https://github.com/your-org/monorepo-template/issues"><strong>Report Bug</strong></a>
+    <a href="https://github.com/bemindlabs/bmt-monorepo-template/issues"><strong>Report Bug</strong></a>
     ·
-    <a href="https://github.com/your-org/monorepo-template/issues"><strong>Request Feature</strong></a>
+    <a href="https://github.com/bemindlabs/bmt-monorepo-template/issues"><strong>Request Feature</strong></a>
   </p>
 </p>
 

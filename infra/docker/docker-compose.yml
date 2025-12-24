@@ -1,3 +1,4 @@
+name: monorepo
 services:
   # Web application
   web:
@@ -13,12 +14,38 @@ services:
     environment:
       - NODE_ENV=development
       - DOCKER=true
+      - SERVICE=web
     env_file:
       - ../../.env
     networks:
       - monorepo-network
     depends_on:
       - redis
+      - api
+
+  # API server (Bun)
+  api:
+    build:
+      context: ../..
+      dockerfile: infra/docker/Dockerfile.dev
+    ports:
+      - '3010:3010'
+    volumes:
+      - ../..:/app
+      - node_modules:/app/node_modules
+    environment:
+      - NODE_ENV=development
+      - DOCKER=true
+      - SERVICE=api
+    env_file:
+      - ../../.env
+    networks:
+      - monorepo-network
+    healthcheck:
+      test: ['CMD', 'curl', '-f', 'http://localhost:3010/health']
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   # Redis cache
   redis:

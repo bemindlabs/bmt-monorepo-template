@@ -1,11 +1,18 @@
 .app {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
+  width: 100%;
+  max-width: none;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 0 2rem;
 }
 
 /* Header */
 .header {
+  width: 100%;
+  max-width: 1200px;
   text-align: center;
   margin-bottom: 4rem;
   padding-top: 2rem;
@@ -33,15 +40,18 @@
 }
 
 .tagline {
-  color: #888;
+  color: #999;
   font-size: 1.2rem;
   max-width: 600px;
   margin: 1rem auto;
 }
 
 .version {
-  display: inline-block;
-  padding: 0.25rem 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
   background: rgba(100, 108, 255, 0.1);
   border: 1px solid rgba(100, 108, 255, 0.3);
   border-radius: 20px;
@@ -51,6 +61,8 @@
 
 /* Sections */
 section {
+  width: 100%;
+  max-width: 1200px;
   margin-bottom: 4rem;
 }
 
@@ -97,7 +109,7 @@ section h2 {
 
 .feature-card p {
   margin: 0;
-  color: #888;
+  color: #999;
   font-size: 0.9rem;
 }
 
@@ -110,7 +122,11 @@ section h2 {
 }
 
 .tech-tag {
-  padding: 0.5rem 1rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 0.75rem 1rem;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 8px;
@@ -174,6 +190,11 @@ section h2 {
   transform: translateY(-2px);
 }
 
+.link-button:focus-visible {
+  outline: 3px solid #646cff;
+  outline-offset: 2px;
+}
+
 .link-button.primary {
   background: linear-gradient(135deg, #646cff 0%, #535bf2 100%);
   border: none;
@@ -186,15 +207,16 @@ section h2 {
 
 /* Footer */
 .footer {
+  width: 100%;
   text-align: center;
   padding: 2rem 0;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 4rem;
+  margin-top: auto;
 }
 
 .footer p {
   margin: 0.5rem 0;
-  color: #888;
+  color: #999;
 }
 
 .footer a {
@@ -203,6 +225,11 @@ section h2 {
 
 .footer a:hover {
   color: #535bf2;
+}
+
+.footer a:focus-visible {
+  outline: 2px solid #646cff;
+  outline-offset: 2px;
 }
 
 .copyright {
@@ -250,6 +277,17 @@ section h2 {
     width: 100%;
     max-width: 300px;
     justify-content: center;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }
 
