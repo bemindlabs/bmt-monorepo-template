@@ -8,13 +8,14 @@
     "dev:node": "tsx watch src/index.ts",
     "start": "bun run src/index.ts",
     "start:node": "tsx src/index.ts",
-    "build": "bun build src/index.ts --outdir=dist --target=bun",
+    "build": "tsup src/index.ts --format esm --dts --clean",
     "type-check": "tsc --noEmit",
     "lint": "eslint src/"
   },
   "dependencies": {},
   "devDependencies": {
     "@types/bun": "^1.2.14",
+    "tsup": "^8.3.5",
     "tsx": "^4.19.0",
     "typescript": "^5.9.0-beta"
   }
