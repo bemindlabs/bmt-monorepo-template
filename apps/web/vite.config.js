@@ -7,6 +7,8 @@ import { defineConfig } from 'vite';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig({
+  // GitHub Pages base path
+  base: process.env.GITHUB_PAGES === 'true' ? '/bmt-monorepo-template/' : '/',
   plugins: [react()],
   resolve: {
     alias: {

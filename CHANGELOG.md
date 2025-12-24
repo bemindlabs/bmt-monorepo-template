@@ -15,6 +15,45 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Nothing yet
 
+## [0.1.1] - 2024-12-24
+
+### Added
+
+#### Web Application
+
+- Complete landing page redesign for BMT Monorepo Template
+  - Feature showcase with 8 key features
+  - Tech stack display
+  - Quick start code block
+  - Links to GitHub and documentation
+  - Responsive design with dark/light mode support
+  - BEMIND TECHNOLOGY branding
+
+#### Infrastructure
+
+- Makefile with 70+ commands in 14 categories
+  - Modular structure with includes from `make/` directory
+  - Categories: setup, dev, build, quality, test, docker, k8s, firebase, git, release, clean, docs, utils, ci
+- GitHub Pages deployment workflow
+  - Automatic deployment on push to main
+  - Vite configuration for GitHub Pages base path
+
+#### Docker
+
+- Development entrypoint script for dependency installation
+- Named volumes for node_modules isolation
+- DOCKER environment variable for container detection
+
+### Changed
+
+- Updated Vite config with proper ESM process import
+- Improved docker-compose.yml with better volume management
+
+### Fixed
+
+- ESLint error for undefined `process` in Vite config
+- Docker development environment esbuild compatibility
+
 ## [0.1.0] - 2024-12-24
 
 ### Added
