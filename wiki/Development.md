@@ -243,6 +243,109 @@ pnpm type-check
 pnpm --filter @monorepo/core type-check
 ```
 
+## Zero-QA Quality Practices
+
+Zero-QA is a methodology for embedding quality directly into the development process, eliminating the need for separate QA phases.
+
+### Initialize Zero-QA
+
+```bash
+# Initialize Zero-QA configuration (first time)
+/zero-qa-init
+```
+
+This creates `.zero-qa/` directory with configuration and checklists.
+
+### Quality Checks
+
+```bash
+# Run all quality checks
+/zero-qa-check all
+
+# Quick checks (lint + type-check)
+/zero-qa-check quick
+
+# Security-focused checks
+/zero-qa-check security
+```
+
+### Automated Code Review
+
+```bash
+# Review staged changes
+/zero-qa-review
+
+# Review specific path
+/zero-qa-review src/components
+```
+
+### Test Management
+
+```bash
+# Run tests
+/zero-qa-test run
+
+# Generate coverage report
+/zero-qa-test coverage
+
+# Identify untested code
+/zero-qa-test gaps
+```
+
+### Quality Gates
+
+Quality gates validate code at different stages:
+
+| Stage    | When         | Checks                        |
+| -------- | ------------ | ----------------------------- |
+| `commit` | Pre-commit   | Lint, types, affected tests   |
+| `pr`     | Pull request | All tests, coverage, security |
+| `merge`  | Pre-merge    | Integration tests, docs       |
+| `deploy` | Pre-deploy   | E2E, performance, security    |
+
+```bash
+# Validate before commit
+/zero-qa-gate commit
+
+# Validate before PR
+/zero-qa-gate pr
+
+# Validate before merge
+/zero-qa-gate merge
+```
+
+### Definition of Done
+
+```bash
+# Check if work item meets DoD criteria
+/zero-qa-dod
+
+# Check specific item
+/zero-qa-dod ITEM-123
+```
+
+### Zero-QA Workflow
+
+```bash
+# 1. Initialize (once per project)
+/zero-qa-init
+
+# 2. During development
+/zero-qa-check quick
+/zero-qa-test run
+
+# 3. Before commit
+/zero-qa-review
+/zero-qa-gate commit
+
+# 4. Before PR
+/zero-qa-gate pr
+/zero-qa-dod
+
+# 5. Before merge
+/zero-qa-gate merge
+```
+
 ## Debugging
 
 ### VS Code Launch Configurations

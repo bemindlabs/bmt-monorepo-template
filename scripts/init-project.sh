@@ -147,11 +147,85 @@ build_packages() {
 }
 
 # ============================================================================
+# Setup Scrum Structure
+# ============================================================================
+
+setup_scrum() {
+    print_step "Step 4: Setting Up Scrum Structure"
+
+    cd "$PROJECT_ROOT"
+
+    if [ -d ".scrum" ]; then
+        print_info "Scrum structure already exists"
+        print_success "Scrum ready"
+    else
+        print_info "Creating .scrum directory structure..."
+        mkdir -p .scrum/backlog .scrum/sprints .scrum/standups .scrum/retrospectives
+
+        # Create config.json
+        cat > .scrum/config.json << 'EOF'
+{
+  "sprintDuration": 14,
+  "sprintPrefix": "sprint-",
+  "team": [],
+  "currentSprint": null
+}
+EOF
+        print_success "Scrum structure created"
+    fi
+}
+
+# ============================================================================
+# Setup Zero-QA
+# ============================================================================
+
+setup_zero_qa() {
+    print_step "Step 5: Setting Up Zero-QA"
+
+    cd "$PROJECT_ROOT"
+
+    if [ -d ".zero-qa" ]; then
+        print_info "Zero-QA structure already exists"
+        print_success "Zero-QA ready"
+    else
+        print_info "Creating .zero-qa directory structure..."
+        mkdir -p .zero-qa/checklists .zero-qa/reports
+
+        # Create config.json
+        cat > .zero-qa/config.json << 'EOF'
+{
+  "enabled": true,
+  "autoReview": true,
+  "qualityGates": {
+    "testCoverage": 80,
+    "lintErrors": 0,
+    "typeErrors": 0,
+    "securityVulnerabilities": 0
+  },
+  "checks": {
+    "lint": true,
+    "typeCheck": true,
+    "unitTests": true,
+    "integrationTests": true,
+    "securityScan": true
+  },
+  "reviewCriteria": {
+    "codeComplexity": 10,
+    "functionLength": 50,
+    "fileLength": 300
+  }
+}
+EOF
+        print_success "Zero-QA structure created"
+    fi
+}
+
+# ============================================================================
 # Setup Git Hooks
 # ============================================================================
 
 setup_git_hooks() {
-    print_step "Step 4: Setting Up Git Hooks"
+    print_step "Step 6: Setting Up Git Hooks"
 
     cd "$PROJECT_ROOT"
 
@@ -170,7 +244,7 @@ setup_git_hooks() {
 # ============================================================================
 
 verify_setup() {
-    print_step "Step 5: Verifying Setup"
+    print_step "Step 7: Verifying Setup"
 
     cd "$PROJECT_ROOT"
 
@@ -195,6 +269,22 @@ verify_setup() {
         print_success "@monorepo/config built"
     else
         print_warning "@monorepo/config not built"
+        errors=1
+    fi
+
+    # Check Scrum structure
+    if [ -d ".scrum" ] && [ -f ".scrum/config.json" ]; then
+        print_success "Scrum structure configured"
+    else
+        print_warning "Scrum structure not configured"
+        errors=1
+    fi
+
+    # Check Zero-QA structure
+    if [ -d ".zero-qa" ] && [ -f ".zero-qa/config.json" ]; then
+        print_success "Zero-QA structure configured"
+    else
+        print_warning "Zero-QA structure not configured"
         errors=1
     fi
 
@@ -290,6 +380,20 @@ print_summary() {
     echo -e "  ${CYAN}pnpm test${NC}           - Run tests"
     echo -e "  ${CYAN}pnpm lint${NC}           - Check code quality"
     echo -e "  ${CYAN}pnpm type-check${NC}     - Check TypeScript types"
+    echo -e "  ${CYAN}pnpm zero-qa${NC}        - Run Zero-QA quality checks"
+    echo ""
+    echo -e "${BOLD}Scrum Commands (Claude Code):${NC}"
+    echo ""
+    echo -e "  ${CYAN}/scrum-backlog${NC}      - Manage product backlog"
+    echo -e "  ${CYAN}/scrum-sprint${NC}       - Sprint management"
+    echo -e "  ${CYAN}/scrum-standup${NC}      - Daily standup notes"
+    echo -e "  ${CYAN}/scrum-retro${NC}        - Sprint retrospectives"
+    echo ""
+    echo -e "${BOLD}Zero-QA Commands (Claude Code):${NC}"
+    echo ""
+    echo -e "  ${CYAN}/zero-qa-check${NC}      - Pre-commit quality checks"
+    echo -e "  ${CYAN}/zero-qa-review${NC}     - Automated code review"
+    echo -e "  ${CYAN}/zero-qa-dod${NC}        - Definition of Done verification"
     echo ""
     echo -e "${GREEN}Happy coding!${NC}"
     echo ""
@@ -304,6 +408,8 @@ main() {
     check_prerequisites
     install_dependencies
     build_packages
+    setup_scrum
+    setup_zero_qa
     setup_git_hooks
     verify_setup
     print_summary
