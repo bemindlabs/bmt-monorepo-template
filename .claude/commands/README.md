@@ -22,15 +22,18 @@ Commands use consistent prefixes for easy discovery:
 
 ## Quick Reference
 
-| Command          | Description                  |
-| ---------------- | ---------------------------- |
-| `/git-status`    | Show repository status       |
-| `/git-commit`    | Generate conventional commit |
-| `/branch-create` | Create feature branch        |
-| `/branch-pr`     | Create pull request          |
-| `/scrum-init`    | Initialize scrum structure   |
-| `/scrum-sprint`  | Manage sprint planning       |
-| `/scrum-backlog` | Manage product backlog       |
+| Command           | Description                  |
+| ----------------- | ---------------------------- |
+| `/git-status`     | Show repository status       |
+| `/git-commit`     | Generate conventional commit |
+| `/branch-create`  | Create feature branch        |
+| `/branch-pr`      | Create pull request          |
+| `/scrum-init`     | Initialize scrum structure   |
+| `/scrum-sprint`   | Manage sprint planning       |
+| `/scrum-backlog`  | Manage product backlog       |
+| `/scrum-standup`  | Record daily standup         |
+| `/scrum-velocity` | Track team velocity          |
+| `/scrum-metrics`  | View metrics dashboard       |
 
 ---
 
@@ -66,13 +69,14 @@ refactor/<description>
 
 ### Documentation (`doc-`)
 
-| Command         | Usage                     | Description             |
-| --------------- | ------------------------- | ----------------------- |
-| `/doc-create`   | `/doc-create <path>`      | Create new doc file     |
-| `/doc-index`    | `/doc-index`              | Generate docs index     |
-| `/doc-clean`    | `/doc-clean`              | Clean up/merge docs     |
-| `/doc-generate` | `/doc-generate [project]` | Auto-generate from code |
-| `/doc-wiki`     | `/doc-wiki`               | Update GitHub wiki      |
+| Command          | Usage                     | Description             |
+| ---------------- | ------------------------- | ----------------------- |
+| `/doc-create`    | `/doc-create <path>`      | Create new doc file     |
+| `/doc-index`     | `/doc-index`              | Generate docs index     |
+| `/doc-clean`     | `/doc-clean`              | Clean up/merge docs     |
+| `/doc-generate`  | `/doc-generate [project]` | Auto-generate from code |
+| `/doc-wiki`      | `/doc-wiki`               | Update GitHub wiki      |
+| `/doc-wiki-sync` | `/doc-wiki-sync`          | Update and sync wiki    |
 
 ### DevOps (`deploy-`)
 
@@ -97,18 +101,55 @@ refactor/<description>
 
 ### Scrum/Agile (`scrum-`)
 
-| Command          | Usage                     | Description                        |
-| ---------------- | ------------------------- | ---------------------------------- |
-| `/scrum-init`    | `/scrum-init`             | Initialize scrum project structure |
-| `/scrum-backlog` | `/scrum-backlog <action>` | Manage product backlog             |
-| `/scrum-sprint`  | `/scrum-sprint <action>`  | Manage sprint planning/tracking    |
-| `/scrum-standup` | `/scrum-standup [notes]`  | Record daily standup notes         |
-| `/scrum-review`  | `/scrum-review`           | Conduct sprint review              |
-| `/scrum-retro`   | `/scrum-retro`            | Conduct sprint retrospective       |
+#### Core Ceremonies
+
+| Command             | Usage                        | Description                        |
+| ------------------- | ---------------------------- | ---------------------------------- |
+| `/scrum-init`       | `/scrum-init`                | Initialize scrum project structure |
+| `/scrum-sprint`     | `/scrum-sprint <action>`     | Manage sprint planning/tracking    |
+| `/scrum-standup`    | `/scrum-standup [notes]`     | Record daily standup notes         |
+| `/scrum-review`     | `/scrum-review`              | Conduct sprint review              |
+| `/scrum-retro`      | `/scrum-retro`               | Conduct sprint retrospective       |
+| `/scrum-refinement` | `/scrum-refinement <action>` | Conduct backlog refinement         |
+
+#### Artifacts & Tracking
+
+| Command             | Usage                        | Description                     |
+| ------------------- | ---------------------------- | ------------------------------- |
+| `/scrum-backlog`    | `/scrum-backlog <action>`    | Manage product backlog          |
+| `/scrum-goal`       | `/scrum-goal <action>`       | Manage sprint goals             |
+| `/scrum-burndown`   | `/scrum-burndown <action>`   | Generate burndown/burnup charts |
+| `/scrum-dod`        | `/scrum-dod <action>`        | Definition of Done management   |
+| `/scrum-impediment` | `/scrum-impediment <action>` | Track blockers/impediments      |
+
+#### Metrics & Team
+
+| Command           | Usage                      | Description               |
+| ----------------- | -------------------------- | ------------------------- |
+| `/scrum-velocity` | `/scrum-velocity <action>` | Track team velocity       |
+| `/scrum-capacity` | `/scrum-capacity <action>` | Plan team capacity        |
+| `/scrum-team`     | `/scrum-team <action>`     | Manage team roles/members |
+| `/scrum-metrics`  | `/scrum-metrics <action>`  | Scrum metrics dashboard   |
 
 **Backlog Actions:** `list`, `add <title>`, `prioritize`, `groom <id>`, `remove <id>`
 
 **Sprint Actions:** `start`, `status`, `end`, `add <item-id>`
+
+**Refinement Actions:** `start`, `estimate`, `split <id>`, `criteria <id>`
+
+**Velocity Actions:** `show`, `history`, `forecast`
+
+**Capacity Actions:** `plan`, `show`, `update`
+
+**Goal Actions:** `show`, `set <goal>`, `evaluate`
+
+**DoD Actions:** `show`, `check <id>`, `update`
+
+**Impediment Actions:** `list`, `add <title>`, `resolve <id>`, `escalate <id>`
+
+**Team Actions:** `show`, `add <name>`, `remove <name>`, `roles`
+
+**Metrics Actions:** `show`, `velocity`, `quality`, `health`
 
 ### Zero-QA Quality (`zero-qa-`)
 
@@ -153,16 +194,36 @@ pnpm lint && pnpm test
 # 1. Initialize scrum (first time only)
 /scrum-init
 
-# 2. Add items to backlog
+# 2. Set up team
+/scrum-team add "Developer Name"
+
+# 3. Add items to backlog
 /scrum-backlog add "User authentication feature"
 
-# 3. Start a new sprint
-/scrum-sprint start
+# 4. Refine backlog (mid-sprint before)
+/scrum-refinement start
+/scrum-refinement estimate
 
-# 4. Daily standups
+# 5. Plan capacity for sprint
+/scrum-capacity plan
+
+# 6. Start a new sprint with goal
+/scrum-sprint start
+/scrum-goal set "Complete user authentication"
+
+# 7. Daily standups
 /scrum-standup
 
-# 5. End of sprint
+# 8. Track progress
+/scrum-burndown show
+/scrum-impediment list
+
+# 9. Mid-sprint check
+/scrum-velocity show
+/scrum-metrics show
+
+# 10. End of sprint
+/scrum-goal evaluate
 /scrum-review
 /scrum-retro
 /scrum-sprint end
@@ -219,6 +280,7 @@ pnpm lint && pnpm test
 ├── doc-clean.md
 ├── doc-generate.md
 ├── doc-wiki.md
+├── doc-wiki-sync.md
 │
 ├── # DevOps
 ├── deploy-docker.md
@@ -232,13 +294,26 @@ pnpm lint && pnpm test
 ├── design-color-palette.md
 ├── design-system-tokens.md
 │
-├── # Scrum/Agile
+├── # Scrum/Agile - Ceremonies
 ├── scrum-init.md
-├── scrum-backlog.md
 ├── scrum-sprint.md
 ├── scrum-standup.md
 ├── scrum-review.md
 ├── scrum-retro.md
+├── scrum-refinement.md
+│
+├── # Scrum/Agile - Artifacts
+├── scrum-backlog.md
+├── scrum-goal.md
+├── scrum-burndown.md
+├── scrum-dod.md
+├── scrum-impediment.md
+│
+├── # Scrum/Agile - Metrics & Team
+├── scrum-velocity.md
+├── scrum-capacity.md
+├── scrum-team.md
+├── scrum-metrics.md
 │
 └── # Zero-QA
     ├── zero-qa-init.md

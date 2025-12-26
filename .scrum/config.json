@@ -2,5 +2,25 @@
   "sprintDuration": 14,
   "sprintPrefix": "sprint-",
   "team": ["BeMind Technology"],
-  "currentSprint": null
+  "currentSprint": null,
+  "velocity": {
+    "historyLength": 5,
+    "focusFactor": 0.7
+  },
+  "storyPointScale": [1, 2, 3, 5, 8, 13, 21],
+  "itemTypes": ["Feature", "Bug", "Tech Debt", "Spike", "Chore"],
+  "priorities": ["Critical", "High", "Medium", "Low"],
+  "impedimentSeverities": ["Critical", "High", "Medium", "Low"],
+  "qualityGates": {
+    "testCoverage": 80,
+    "maxBugsPerSprint": 5,
+    "maxTechDebtItems": 10
+  },
+  "ceremonies": {
+    "sprintPlanning": "Day 1",
+    "dailyStandup": "Daily",
+    "refinement": "Mid-sprint",
+    "sprintReview": "Last day",
+    "retrospective": "Last day"
+  }
 }
