@@ -15,6 +15,7 @@ Commands use consistent prefixes for easy discovery:
 | `design-`  | UI/UX         | Design system and reviews |
 | `doc-`     | Documentation | Documentation management  |
 | `git-`     | Git           | Git operations            |
+| `github-`  | GitHub        | GitHub issues & actions   |
 | `scrum-`   | Agile         | Scrum/agile management    |
 | `zero-qa-` | Quality       | Zero-QA quality practices |
 
@@ -49,6 +50,7 @@ Commands use consistent prefixes for easy discovery:
 | `/git-repo-init`        | `/git-repo-init`           | Initialize after clone               |
 | `/git-submodule-add`    | `/git-submodule-add <url>` | Add git submodule                    |
 | `/git-submodule-update` | `/git-submodule-update`    | Update all submodules                |
+| `/git-push`             | `/git-push [action]`       | Push/fetch all branches              |
 
 ### Branch Workflow (`branch-`)
 
@@ -86,6 +88,13 @@ refactor/<description>
 | `/deploy-docker <project>` | `/deploy-docker api`  | Deploy specific project |
 | `/deploy-docker logs`      | `/deploy-docker logs` | View container logs     |
 | `/deploy-docker stop`      | `/deploy-docker stop` | Stop all containers     |
+
+### GitHub (`github-`)
+
+| Command               | Usage                          | Description                  |
+| --------------------- | ------------------------------ | ---------------------------- |
+| `/github-fix-actions` | `/github-fix-actions [run-id]` | Diagnose and fix CI failures |
+| `/github-fix-issues`  | `/github-fix-issues [number]`  | List and fix GitHub issues   |
 
 ### Design System (`design-`)
 
@@ -268,6 +277,7 @@ pnpm lint && pnpm test
 ├── git-repo-init.md
 ├── git-submodule-add.md
 ├── git-submodule-update.md
+├── git-push.md
 │
 ├── # Branch Workflow
 ├── branch-create.md
@@ -284,6 +294,10 @@ pnpm lint && pnpm test
 │
 ├── # DevOps
 ├── deploy-docker.md
+│
+├── # GitHub
+├── github-fix-actions.md
+├── github-fix-issues.md
 │
 ├── # Design System
 ├── design-search.md
