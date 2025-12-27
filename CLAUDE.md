@@ -24,6 +24,64 @@ TypeScript strict mode is mandatory; avoid `any` and prefer explicit return type
 
 Vitest drives all suites; target folders mirror runtime modules (`tests/unit/core`, `tests/integration/shared`). Name specs `*.spec.ts`, open with `describe('<Module>')`, and rely on `tests/helpers` for cross-cutting mocks. Prefer fast unit coverage first, then integration/e2e only when behavior spans packages. Use `pnpm test:coverage` before pushing to ensure regressions stay visible, and document unusual fixtures in `tests/README.md`. When touching infra or Docker, run the relevant suite plus `pnpm docker:up` to validate service health.
 
+## Branching Workflow
+
+This project follows a multi-environment branching strategy with protected branches and quality gates.
+
+### Branch Hierarchy
+
+| Branch       | Purpose                      | Protection Level | Merge Requirements                               |
+| ------------ | ---------------------------- | ---------------- | ------------------------------------------------ |
+| `production` | Live production environment  | Highest          | From staging only, coverage ≥80%, all tests pass |
+| `staging`    | Pre-production testing       | High             | From feature branches, QA approved               |
+| `dev`        | Integration and daily builds | Medium           | From feature branches, CI passes                 |
+| `main`       | Development baseline         | Low              | Direct commits allowed for docs/config           |
+
+### Feature Development Flow
+
+```
+feature/* ──┬──→ dev (daily integration)
+            ├──→ staging (QA testing)
+            └──→ production (release, requires all gates passed)
+```
+
+1. **Create feature branch**: `git checkout -b feature/<name>` from `main`
+2. **Merge to dev**: For integration testing and CI validation
+3. **Merge to staging**: After dev validation, for QA and UAT
+4. **Merge to production**: Only when:
+   - Feature is complete and tested
+   - Test coverage ≥ 80%
+   - All quality gates pass (`/zero-qa-gate merge`)
+   - PR approved by reviewer
+
+### Production Release Checklist
+
+Before merging to production, ensure:
+
+- [ ] All unit tests pass (`pnpm test`)
+- [ ] Coverage threshold met (`pnpm test:coverage` ≥ 80%)
+- [ ] No lint errors (`pnpm lint`)
+- [ ] No type errors (`pnpm type-check`)
+- [ ] Integration tests pass (`pnpm test:integration`)
+- [ ] Zero-QA gate passes (`/zero-qa-gate merge`)
+- [ ] PR reviewed and approved
+
+### Quick Commands
+
+```bash
+# Create feature branch
+git checkout -b feature/<name>
+
+# Merge to dev for integration
+git checkout dev && git merge feature/<name>
+
+# Merge to staging for QA
+git checkout staging && git merge feature/<name>
+
+# Merge to production (after all checks pass)
+git checkout production && git merge feature/<name>
+```
+
 ## Commit & Pull Request Guidelines
 
 Commitlint enforces Conventional Commits with the types listed in `commitlint.config.js` (`feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`) and scopes such as `core`, `shared`, `config`, `app`, `cli`, `infra`, `docs`. Subjects stay lower-case and ≤100 chars, e.g., `feat(core): add auth session guard`. Run lint, type-check, build, and relevant tests before committing so Husky hooks stay fast. PRs should summarize intent, link issues, note the commands executed, and attach screenshots or cURL samples for user-facing or API changes. Flag breaking changes explicitly and copy required environment keys from `.env.example` into local `.env.local` files—never commit secrets.

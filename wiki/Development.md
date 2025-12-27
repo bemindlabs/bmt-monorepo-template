@@ -58,6 +58,93 @@ make test          # Run tests
 
 ## Git Workflow
 
+### Branching Strategy
+
+This project uses a multi-environment branching model with protected branches:
+
+```
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                         BRANCHING WORKFLOW                                  │
+├─────────────────────────────────────────────────────────────────────────────┤
+│                                                                             │
+│   feature/* ─────┬────────────→ dev (Integration)                          │
+│                  │                  │                                       │
+│                  │                  ▼                                       │
+│                  ├────────────→ staging (QA/UAT)                           │
+│                  │                  │                                       │
+│                  │                  ▼                                       │
+│                  └────────────→ production (Live)                          │
+│                                                                             │
+│   Protected: dev (CI), staging (QA), production (coverage ≥80%)            │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+```
+
+### Environment Branches
+
+| Branch       | Environment | Purpose                      | Protection Requirements                    |
+| ------------ | ----------- | ---------------------------- | ------------------------------------------ |
+| `production` | Production  | Live production environment  | Coverage ≥80%, all tests pass, approved PR |
+| `staging`    | Staging     | Pre-production QA testing    | QA approval, CI passes                     |
+| `dev`        | Development | Integration and daily builds | CI passes, lint/type-check clean           |
+| `main`       | Baseline    | Development baseline         | Default branch for new features            |
+
+### Feature Branch Flow
+
+1. **Create**: Branch from `main`
+
+   ```bash
+   git checkout main && git pull
+   git checkout -b feature/<name>
+   ```
+
+2. **Develop**: Implement with frequent commits
+
+3. **Integrate to Dev**: Daily integration
+
+   ```bash
+   git checkout dev && git pull
+   git merge feature/<name>
+   git push
+   ```
+
+4. **Promote to Staging**: After dev validation
+
+   ```bash
+   git checkout staging && git pull
+   git merge feature/<name>
+   git push
+   ```
+
+5. **Release to Production**: Only when all gates pass
+
+   ```bash
+   # Verify all requirements
+   pnpm test:coverage        # ≥80% coverage
+   pnpm lint                 # 0 errors
+   pnpm type-check          # 0 errors
+   /zero-qa-gate merge      # Quality gate
+
+   # Create PR and get approval, then merge
+   git checkout production && git pull
+   git merge feature/<name>
+   git push
+   ```
+
+### Production Release Checklist
+
+Before merging any feature to production:
+
+| Check        | Command                 | Threshold |
+| ------------ | ----------------------- | --------- |
+| Unit Tests   | `pnpm test`             | All pass  |
+| Coverage     | `pnpm test:coverage`    | ≥ 80%     |
+| Lint         | `pnpm lint`             | 0 errors  |
+| Types        | `pnpm type-check`       | 0 errors  |
+| Integration  | `pnpm test:integration` | All pass  |
+| Quality Gate | `/zero-qa-gate merge`   | Pass      |
+| PR Review    | GitHub PR               | Approved  |
+
 ### Branch Naming
 
 | Type    | Pattern             | Example                 |
