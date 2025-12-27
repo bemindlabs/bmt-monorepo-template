@@ -8,16 +8,17 @@ Custom slash commands for the monorepo template.
 
 Commands use consistent prefixes for easy discovery:
 
-| Prefix     | Category      | Description               |
-| ---------- | ------------- | ------------------------- |
-| `branch-`  | Workflow      | Git branch operations     |
-| `deploy-`  | DevOps        | Deployment operations     |
-| `design-`  | UI/UX         | Design system and reviews |
-| `doc-`     | Documentation | Documentation management  |
-| `git-`     | Git           | Git operations            |
-| `github-`  | GitHub        | GitHub issues & actions   |
-| `scrum-`   | Agile         | Scrum/agile management    |
-| `zero-qa-` | Quality       | Zero-QA quality practices |
+| Prefix     | Category      | Description                 |
+| ---------- | ------------- | --------------------------- |
+| `branch-`  | Workflow      | Git branch operations       |
+| `deploy-`  | DevOps        | Deployment operations       |
+| `design-`  | UI/UX         | Design system and reviews   |
+| `doc-`     | Documentation | Documentation management    |
+| `env-`     | Environment   | Environment file management |
+| `git-`     | Git           | Git operations              |
+| `github-`  | GitHub        | GitHub issues & actions     |
+| `scrum-`   | Agile         | Scrum/agile management      |
+| `zero-qa-` | Quality       | Zero-QA quality practices   |
 
 ---
 
@@ -88,6 +89,21 @@ refactor/<description>
 | `/deploy-docker <project>` | `/deploy-docker api`  | Deploy specific project |
 | `/deploy-docker logs`      | `/deploy-docker logs` | View container logs     |
 | `/deploy-docker stop`      | `/deploy-docker stop` | Stop all containers     |
+
+### Environment (`env-`)
+
+| Command         | Usage                         | Description                         |
+| --------------- | ----------------------------- | ----------------------------------- |
+| `/env-generate` | `/env-generate [environment]` | Generate env file from template     |
+| `/env-check`    | `/env-check [file]`           | Validate env against template       |
+| `/env-fix`      | `/env-fix [file]`             | Fix env file issues automatically   |
+| `/env-clean`    | `/env-clean [action]`         | Clean sensitive data or unused vars |
+| `/env-sync`     | `/env-sync [source] [target]` | Sync variables across env files     |
+| `/env-diff`     | `/env-diff <file1> <file2>`   | Compare two environment files       |
+
+**Environment Actions:** `generate`, `check`, `fix`, `clean`, `sync`, `diff`
+
+**Clean Actions:** `secrets`, `unused`, `duplicates`, `all`
 
 ### GitHub (`github-`)
 
@@ -295,6 +311,14 @@ pnpm lint && pnpm test
 ├── # DevOps
 ├── deploy-docker.md
 │
+├── # Environment
+├── env-generate.md
+├── env-check.md
+├── env-fix.md
+├── env-clean.md
+├── env-sync.md
+├── env-diff.md
+│
 ├── # GitHub
 ├── github-fix-actions.md
 ├── github-fix-issues.md
@@ -351,3 +375,68 @@ pnpm lint && pnpm test
 - Use existing prefix if command fits a category
 - Prefix should be 3-7 characters
 - Use kebab-case for multi-word names
+
+---
+
+## Official Command Format (Claude Code)
+
+Commands support optional YAML frontmatter for configuration:
+
+```markdown
+---
+allowed-tools: Bash(git:*), Read, Edit
+description: Brief description of the command
+argument-hint: [arg1] [arg2]
+model: claude-sonnet-4-5-20250929
+---
+
+# Command Title
+
+Command instructions here...
+
+Use $1, $2 for positional args or $ARGUMENTS for all args.
+```
+
+### Frontmatter Options
+
+| Field                      | Description               | Default               |
+| -------------------------- | ------------------------- | --------------------- |
+| `allowed-tools`            | Tools the command can use | Inherits from session |
+| `description`              | Brief description         | First line of content |
+| `argument-hint`            | Expected arguments        | None                  |
+| `model`                    | Specific Claude model     | Inherits from session |
+| `disable-model-invocation` | Prevent SlashCommand tool | `false`               |
+
+### Example with Frontmatter
+
+```markdown
+---
+allowed-tools: Bash(git:*), Read
+description: Show repository status with branch info
+argument-hint: [--verbose]
+---
+
+# Git Status
+
+Show the current status of the repository.
+
+## Process
+
+1. Run `git status`
+2. Show current branch
+3. List modified files
+```
+
+---
+
+## Command Namespacing
+
+Commands can be organized in subdirectories:
+
+```
+.claude/commands/
+├── git-status.md          # /git-status (project level)
+├── scrum/
+│   ├── sprint.md          # /sprint (project:scrum)
+│   └── backlog.md         # /backlog (project:scrum)
+```
