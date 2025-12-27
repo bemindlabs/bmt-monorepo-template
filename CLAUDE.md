@@ -90,6 +90,72 @@ Commitlint enforces Conventional Commits with the types listed in `commitlint.co
 
 Use Claude Code slash commands to manage Scrum artifacts: `/scrum-backlog list` shows all 47 backlog items sorted by priority, `/scrum-backlog add "title"` creates new items, `/scrum-sprint start` begins a new sprint, `/scrum-standup` records daily notes, and `/scrum-retro` creates retrospective documents. Configuration in `.scrum/config.json` sets 14-day sprints.
 
+## Backlog Management & GitHub Issues Sync
+
+This project supports dual-tracking of backlog items: locally in `.scrum/backlog/` and on GitHub Issues for team visibility.
+
+### Local Backlog Structure
+
+Local backlog items live in `.scrum/backlog/PBI-{number}-{slug}.md` with fields: ID, Type, Priority, Points, Status, Description, and Acceptance Criteria. Use `/scrum-backlog` commands (`list`, `add`, `prioritize`, `groom`, `remove`) for local management.
+
+### GitHub Issues Integration
+
+Use `/github-fix-issues` to work with GitHub Issues. Key commands:
+
+```bash
+# List and filter issues
+gh issue list --state open --limit 20
+gh issue list --label bug --state open
+gh issue list --assignee @me
+
+# View issue details
+gh issue view <number> --comments
+
+# Create issue from local backlog
+gh issue create --title "PBI-XXX: Title" --body "Description" --label "feature"
+
+# Link commits/PRs to issues
+git commit -m "feat(scope): description\n\nRefs #<issue-number>"
+gh pr create --body "Fixes #<issue-number>"
+```
+
+### Syncing Local Backlog to GitHub Issues
+
+To keep local backlog and GitHub Issues in sync:
+
+1. **Create GitHub Issue from Local PBI**:
+
+   ```bash
+   gh issue create --title "PBI-{id}: {title}" \
+     --body "$(cat .scrum/backlog/PBI-{id}-{slug}.md)" \
+     --label "{type}"
+   ```
+
+2. **Update Local PBI with GitHub Issue Number**:
+   Add `**GitHub Issue:** #{number}` to the local PBI file after creating the GitHub issue.
+
+3. **Sync Status Updates**:
+   - When moving PBI to sprint → Add label `in-sprint` on GitHub
+   - When completing PBI → Close GitHub issue with `gh issue close <number>`
+   - When prioritizing → Update GitHub issue labels (`priority:high`, `priority:medium`, `priority:low`)
+
+### Backlog Sync Workflow
+
+```
+Local .scrum/backlog/           GitHub Issues
+       │                              │
+       ├── PBI-001 ──────────────────→ Issue #1 (linked)
+       ├── PBI-002 ──────────────────→ Issue #2 (linked)
+       └── PBI-003 ←──────────────────┘ (new issue from team)
+```
+
+| Local Status | GitHub Labels           | Action                    |
+| ------------ | ----------------------- | ------------------------- |
+| New          | `backlog`, `triage`     | Create issue, link to PBI |
+| Ready        | `ready`, `priority:*`   | Update priority label     |
+| In Sprint    | `in-sprint`, `sprint-N` | Move to sprint milestone  |
+| Done         | Closed                  | Close issue, mark done    |
+
 ## Zero-QA Commands
 
 Quality gates are enforced via `/zero-qa-check` (pre-commit verification), `/zero-qa-review` (automated code review), `/zero-qa-dod` (Definition of Done), and `/zero-qa-gate` (quality gate validation). Run `pnpm zero-qa` for lint + type-check + test, or `pnpm zero-qa:full` to include E2E tests. Thresholds: 80% coverage, 0 lint errors, 0 type errors, 0 security vulnerabilities.
