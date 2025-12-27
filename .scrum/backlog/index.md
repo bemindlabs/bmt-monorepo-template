@@ -1,7 +1,7 @@
 # Product Backlog
 
-**Total Items:** 47 | **In Progress:** 6 | **Planned:** 41
-**Total Story Points:** 299
+**Total Items:** 55 | **In Progress:** 6 | **Planned:** 49
+**Total Story Points:** 362
 
 ---
 
@@ -9,6 +9,7 @@
 
 | Category                 | Items | Points | In Progress | Planned |
 | ------------------------ | ----- | ------ | ----------- | ------- |
+| AI Automation            | 8     | 63     | 0           | 8       |
 | AI Provider Integrations | 7     | 44     | 2           | 5       |
 | Agent Framework          | 5     | 47     | 3           | 2       |
 | Infrastructure           | 5     | 37     | 0           | 5       |
@@ -53,6 +54,10 @@
 | PBI-039 | Redis Caching Layer        | Database        | 5      | New         |
 | PBI-040 | Prisma ORM Integration     | Database        | 5      | New         |
 | PBI-043 | REST API (Express/Fastify) | API             | 8      | New         |
+| PBI-048 | AI Code Review Actions     | AI Automation   | 8      | New         |
+| PBI-049 | AI Issue Triage            | AI Automation   | 5      | New         |
+| PBI-051 | AI Test Generation         | AI Automation   | 13     | New         |
+| PBI-054 | Claude Code Workflow       | AI Automation   | 13     | New         |
 
 ### Medium Priority
 
@@ -83,6 +88,10 @@
 | PBI-044 | GraphQL (Apollo Server)     | API             | 8      | New    |
 | PBI-045 | tRPC End-to-end Types       | API             | 5      | New    |
 | PBI-046 | WebSocket Real-time         | API             | 8      | New    |
+| PBI-050 | AI PR Description           | AI Automation   | 5      | New    |
+| PBI-052 | AI Wiki Sync                | AI Automation   | 8      | New    |
+| PBI-053 | GitHub Projects Automation  | AI Automation   | 8      | New    |
+| PBI-055 | AI Commit Assistant         | AI Automation   | 3      | New    |
 
 ### Low Priority
 
@@ -194,6 +203,19 @@
 | PBI-046 | WebSocket Real-time        | Medium   | 8      | New    |
 | PBI-047 | gRPC High-performance      | Low      | 8      | New    |
 
+### AI Automation (8 items, 63 pts)
+
+| ID      | Title                      | Priority | Points | Status |
+| ------- | -------------------------- | -------- | ------ | ------ |
+| PBI-048 | AI Code Review Actions     | High     | 8      | New    |
+| PBI-049 | AI Issue Triage            | High     | 5      | New    |
+| PBI-050 | AI PR Description          | Medium   | 5      | New    |
+| PBI-051 | AI Test Generation         | High     | 13     | New    |
+| PBI-052 | AI Wiki Sync               | Medium   | 8      | New    |
+| PBI-053 | GitHub Projects Automation | Medium   | 8      | New    |
+| PBI-054 | Claude Code Workflow       | High     | 13     | New    |
+| PBI-055 | AI Commit Assistant        | Medium   | 3      | New    |
+
 ---
 
-_Last updated: 2024-12-24_
+_Last updated: 2025-12-27_
