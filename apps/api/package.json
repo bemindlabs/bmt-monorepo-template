@@ -12,11 +12,10 @@
     "type-check": "tsc --noEmit",
     "lint": "eslint src/"
   },
-  "dependencies": {},
   "devDependencies": {
-    "@types/bun": "^1.2.14",
-    "tsup": "^8.3.5",
-    "tsx": "^4.19.0",
-    "typescript": "^5.9.0-beta"
+    "@types/bun": "^1.3.5",
+    "tsup": "^8.5.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   }
 }

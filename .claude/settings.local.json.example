@@ -1,0 +1,13 @@
+{
+  "$schema": "https://claude.ai/schemas/claude-code-settings.json",
+  "_comment": "Copy this file to settings.local.json for personal overrides (gitignored)",
+  "permissions": {
+    "allow": [],
+    "ask": [],
+    "deny": []
+  },
+  "env": {
+    "CUSTOM_VAR": "your-value"
+  },
+  "model": "claude-sonnet-4-5-20250929"
+}

@@ -24,6 +24,64 @@ TypeScript strict mode is mandatory; avoid `any` and prefer explicit return type
 
 Vitest drives all suites; target folders mirror runtime modules (`tests/unit/core`, `tests/integration/shared`). Name specs `*.spec.ts`, open with `describe('<Module>')`, and rely on `tests/helpers` for cross-cutting mocks. Prefer fast unit coverage first, then integration/e2e only when behavior spans packages. Use `pnpm test:coverage` before pushing to ensure regressions stay visible, and document unusual fixtures in `tests/README.md`. When touching infra or Docker, run the relevant suite plus `pnpm docker:up` to validate service health.
 
+## Branching Workflow
+
+This project follows a multi-environment branching strategy with protected branches and quality gates.
+
+### Branch Hierarchy
+
+| Branch       | Purpose                      | Protection Level | Merge Requirements                               |
+| ------------ | ---------------------------- | ---------------- | ------------------------------------------------ |
+| `production` | Live production environment  | Highest          | From staging only, coverage ≥80%, all tests pass |
+| `staging`    | Pre-production testing       | High             | From feature branches, QA approved               |
+| `dev`        | Integration and daily builds | Medium           | From feature branches, CI passes                 |
+| `main`       | Development baseline         | Low              | Direct commits allowed for docs/config           |
+
+### Feature Development Flow
+
+```
+feature/* ──┬──→ dev (daily integration)
+            ├──→ staging (QA testing)
+            └──→ production (release, requires all gates passed)
+```
+
+1. **Create feature branch**: `git checkout -b feature/<name>` from `main`
+2. **Merge to dev**: For integration testing and CI validation
+3. **Merge to staging**: After dev validation, for QA and UAT
+4. **Merge to production**: Only when:
+   - Feature is complete and tested
+   - Test coverage ≥ 80%
+   - All quality gates pass (`/zero-qa-gate merge`)
+   - PR approved by reviewer
+
+### Production Release Checklist
+
+Before merging to production, ensure:
+
+- [ ] All unit tests pass (`pnpm test`)
+- [ ] Coverage threshold met (`pnpm test:coverage` ≥ 80%)
+- [ ] No lint errors (`pnpm lint`)
+- [ ] No type errors (`pnpm type-check`)
+- [ ] Integration tests pass (`pnpm test:integration`)
+- [ ] Zero-QA gate passes (`/zero-qa-gate merge`)
+- [ ] PR reviewed and approved
+
+### Quick Commands
+
+```bash
+# Create feature branch
+git checkout -b feature/<name>
+
+# Merge to dev for integration
+git checkout dev && git merge feature/<name>
+
+# Merge to staging for QA
+git checkout staging && git merge feature/<name>
+
+# Merge to production (after all checks pass)
+git checkout production && git merge feature/<name>
+```
+
 ## Commit & Pull Request Guidelines
 
 Commitlint enforces Conventional Commits with the types listed in `commitlint.config.js` (`feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`) and scopes such as `core`, `shared`, `config`, `app`, `cli`, `infra`, `docs`. Subjects stay lower-case and ≤100 chars, e.g., `feat(core): add auth session guard`. Run lint, type-check, build, and relevant tests before committing so Husky hooks stay fast. PRs should summarize intent, link issues, note the commands executed, and attach screenshots or cURL samples for user-facing or API changes. Flag breaking changes explicitly and copy required environment keys from `.env.example` into local `.env.local` files—never commit secrets.
@@ -31,6 +89,72 @@ Commitlint enforces Conventional Commits with the types listed in `commitlint.co
 ## Scrum Commands
 
 Use Claude Code slash commands to manage Scrum artifacts: `/scrum-backlog list` shows all 47 backlog items sorted by priority, `/scrum-backlog add "title"` creates new items, `/scrum-sprint start` begins a new sprint, `/scrum-standup` records daily notes, and `/scrum-retro` creates retrospective documents. Configuration in `.scrum/config.json` sets 14-day sprints.
+
+## Backlog Management & GitHub Issues Sync
+
+This project supports dual-tracking of backlog items: locally in `.scrum/backlog/` and on GitHub Issues for team visibility.
+
+### Local Backlog Structure
+
+Local backlog items live in `.scrum/backlog/PBI-{number}-{slug}.md` with fields: ID, Type, Priority, Points, Status, Description, and Acceptance Criteria. Use `/scrum-backlog` commands (`list`, `add`, `prioritize`, `groom`, `remove`) for local management.
+
+### GitHub Issues Integration
+
+Use `/github-fix-issues` to work with GitHub Issues. Key commands:
+
+```bash
+# List and filter issues
+gh issue list --state open --limit 20
+gh issue list --label bug --state open
+gh issue list --assignee @me
+
+# View issue details
+gh issue view <number> --comments
+
+# Create issue from local backlog
+gh issue create --title "PBI-XXX: Title" --body "Description" --label "feature"
+
+# Link commits/PRs to issues
+git commit -m "feat(scope): description\n\nRefs #<issue-number>"
+gh pr create --body "Fixes #<issue-number>"
+```
+
+### Syncing Local Backlog to GitHub Issues
+
+To keep local backlog and GitHub Issues in sync:
+
+1. **Create GitHub Issue from Local PBI**:
+
+   ```bash
+   gh issue create --title "PBI-{id}: {title}" \
+     --body "$(cat .scrum/backlog/PBI-{id}-{slug}.md)" \
+     --label "{type}"
+   ```
+
+2. **Update Local PBI with GitHub Issue Number**:
+   Add `**GitHub Issue:** #{number}` to the local PBI file after creating the GitHub issue.
+
+3. **Sync Status Updates**:
+   - When moving PBI to sprint → Add label `in-sprint` on GitHub
+   - When completing PBI → Close GitHub issue with `gh issue close <number>`
+   - When prioritizing → Update GitHub issue labels (`priority:high`, `priority:medium`, `priority:low`)
+
+### Backlog Sync Workflow
+
+```
+Local .scrum/backlog/           GitHub Issues
+       │                              │
+       ├── PBI-001 ──────────────────→ Issue #1 (linked)
+       ├── PBI-002 ──────────────────→ Issue #2 (linked)
+       └── PBI-003 ←──────────────────┘ (new issue from team)
+```
+
+| Local Status | GitHub Labels           | Action                    |
+| ------------ | ----------------------- | ------------------------- |
+| New          | `backlog`, `triage`     | Create issue, link to PBI |
+| Ready        | `ready`, `priority:*`   | Update priority label     |
+| In Sprint    | `in-sprint`, `sprint-N` | Move to sprint milestone  |
+| Done         | Closed                  | Close issue, mark done    |
 
 ## Zero-QA Commands
 

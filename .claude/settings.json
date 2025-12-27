@@ -1,4 +1,31 @@
 {
+  "$schema": "https://json.schemastore.org/claude-code-settings.json",
+  "permissions": {
+    "allow": [
+      "Bash(pnpm:*)",
+      "Bash(npm:*)",
+      "Bash(turbo:*)",
+      "Bash(git:*)",
+      "Bash(gh:*)",
+      "Bash(make:*)",
+      "Read(*.md)",
+      "Read(*.ts)",
+      "Read(*.tsx)",
+      "Read(*.json)",
+      "Read(*.yaml)",
+      "Read(*.yml)"
+    ],
+    "ask": ["Bash(git push:*)", "Bash(git merge:*)", "Bash(docker:*)", "Write(.env*)"],
+    "deny": [
+      "Read(.env)",
+      "Read(.env.local)",
+      "Read(*credentials*.json)",
+      "Read(*secrets*.json)",
+      "Bash(rm -rf /)*"
+    ],
+    "additionalDirectories": [],
+    "defaultMode": "acceptEdits"
+  },
   "hooks": {
     "PreToolUse": [
       {
@@ -6,7 +33,8 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/check-sensitive-files.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/check-sensitive-files.sh",
+            "timeout": 30
           }
         ]
       }
@@ -17,10 +45,36 @@
         "hooks": [
           {
             "type": "command",
-            "command": ".claude/hooks/post-tool-use.sh"
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/post-tool-use.sh",
+            "timeout": 60
+          }
+        ]
+      }
+    ],
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/setup-git-hooks.sh",
+            "timeout": 30
           }
         ]
       }
     ]
+  },
+  "env": {
+    "NODE_ENV": "development",
+    "TURBO_TELEMETRY_DISABLED": "1",
+    "FORCE_COLOR": "1"
+  },
+  "attribution": {
+    "commit": "🤖 Generated with [Claude Code](https://claude.com/claude-code)\n\nCo-Authored-By: Claude <noreply@anthropic.com>",
+    "pr": "🤖 Generated with [Claude Code](https://claude.com/claude-code)"
+  },
+  "sandbox": {
+    "enabled": false,
+    "autoAllowBashIfSandboxed": true
   }
 }

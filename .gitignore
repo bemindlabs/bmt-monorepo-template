@@ -55,6 +55,9 @@ service-account*.json
 .temp
 .tmp
 
+# Claude Code local settings (personal overrides)
+.claude/settings.local.json
+
 # Storybook
 storybook-static
 

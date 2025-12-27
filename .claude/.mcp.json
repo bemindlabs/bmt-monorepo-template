@@ -1,0 +1,27 @@
+{
+  "$schema": "https://claude.ai/schemas/mcp-config.json",
+  "_comment": "MCP (Model Context Protocol) server configurations for Claude Code",
+  "mcpServers": {
+    "memory": {
+      "_comment": "Persistent memory across sessions",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-memory"]
+    },
+    "github": {
+      "_comment": "GitHub API integration - requires GITHUB_TOKEN env var",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-github"],
+      "env": {
+        "GITHUB_TOKEN": "${GITHUB_TOKEN}"
+      }
+    },
+    "filesystem": {
+      "_comment": "Extended filesystem operations",
+      "type": "stdio",
+      "command": "npx",
+      "args": ["-y", "@anthropic/mcp-filesystem", "--allowed-directories", "${CLAUDE_PROJECT_DIR}"]
+    }
+  }
+}
