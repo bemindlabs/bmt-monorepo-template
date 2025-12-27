@@ -24,7 +24,7 @@
     "clean": "rimraf dist"
   },
   "devDependencies": {
-    "tsup": "^8.3.5",
-    "vitest": "^2.1.8"
+    "tsup": "^8.5.1",
+    "vitest": "^2.1.9"
   }
 }
